@@ -1,0 +1,54 @@
+@startuml
+enum ExpenseCategory {
+    FOOD
+    CLOTH
+    TAX
+}
+
+enum IncomeCategory {
+    SALARY
+    POCKET_MONEY
+    FINANCIAL_MONEY
+    ETC
+}
+
+class AccountBook {
+    private Integer id;
+    private String userName;
+    List<Report> reportList;
+}
+
+interface Checkable {
+    - AccountBook accountBook;
+    List<Report> checkAccount()
+    void showStatics()
+    default void printAccount()
+}
+
+class DayCheckAccount implements Checkable {
+}
+
+class WeekCheckAccount implements Checkable {
+}
+
+class MonthCheckAccount implements Checkable {
+}
+
+class YearCheckAccount implements Checkable {
+}
+
+class Report {
+    int price;
+    String content;
+    String memo;
+}
+
+
+class Income extends Report{
+    List<IncomeCategory> categories;
+}
+
+class Expense extends Report{
+    List<ExpenseCategory> categories;
+}
+@enduml
