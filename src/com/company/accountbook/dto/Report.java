@@ -1,15 +1,13 @@
 package com.company.accountbook.dto;
 
-import java.time.LocalDate;
-
 public class Report {
-    private String content;
-    private int price;
-    private String memo;
-    private String accountBookName;
-    private int year;
-    private int month;
-    private int day;
+    protected String content;
+    protected int price;
+    protected String memo;
+    protected String accountBookName;
+    protected int year;
+    protected int month;
+    protected int day;
 
     public Report() {
     }
