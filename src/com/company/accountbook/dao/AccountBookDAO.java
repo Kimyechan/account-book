@@ -1,8 +1,12 @@
 package com.company.accountbook.dao;
 
+import com.company.accountbook.dto.Report;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class AccountBookDAO {
 
@@ -26,15 +30,34 @@ public class AccountBookDAO {
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false", user_name, password);
             System.out.println("정상적으로 연결되었습니다.");
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
             e.printStackTrace();
         }
 
         // 3.해제
         try {
-            if(con != null)
+            if (con != null)
                 con.close();
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+        }
+    }
+
+    public List<Report> getDayReport(int year, int month, int day) {
+        // TODO: make sql
+        String sql = "select * from account_book where day == && ";
+        return null;
+    }
+
+    public List<Report> getWeekReport(LocalDate startDate, LocalDate endDate) {
+        return null;
+    }
+
+    public List<Report> getMonthReport(int year, int month) {
+        return null;
+    }
+
+    public List<Report> getYearReport(int year) {
+        return null;
     }
 }
