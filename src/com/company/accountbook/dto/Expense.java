@@ -1,9 +1,9 @@
 package com.company.accountbook.dto;
 
 import com.company.accountbook.vo.ExpenseCategory;
+import com.company.accountbook.vo.PayCategory;
 
-import java.util.List;
-
-public class Expense {
-    List<ExpenseCategory> categoryList;
+public class Expense extends Report{
+    ExpenseCategory category;
+    PayCategory payMethod;
 }

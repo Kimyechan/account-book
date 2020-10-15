@@ -1,7 +1,6 @@
 package com.company.accountbook.service;
 
 import com.company.accountbook.dto.Report;
-
 import java.util.List;
 
 public interface CheckAccountBook {
