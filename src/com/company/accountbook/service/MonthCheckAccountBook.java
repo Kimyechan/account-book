@@ -35,4 +35,12 @@ public class MonthCheckAccountBook implements CheckAccountBook {
     public void printAccount() {
 
     }
+
+    public void printCalendar() {
+        // 기본값으로 이번 달 출력
+    }
+
+    public void printCalendar(int year, int month) {
+
+    }
 }
