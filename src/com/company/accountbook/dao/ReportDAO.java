@@ -28,19 +28,20 @@ public class ReportDAO {
         }
     }
 
-    public void insertReport(String content, int price, String memo, LocalDate date){
+    public void insertReport(boolean isIncome, String content, int price, String memo, LocalDate date){
         Connection con = DBConnection.getConnection();
-        String sql = "insert into report value(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into report value(?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, content);
-            ps.setInt(2, price);
-            ps.setString(3, memo);
-            ps.setString(4, accountBook.getUsername());
-            ps.setInt(5 , date.getDayOfMonth());
-            ps.setInt(6, date.getMonthValue());
-            ps.setInt(7, date.getYear());
+            ps.setBoolean(1, isIncome);
+            ps.setString(2, content);
+            ps.setInt(3, price);
+            ps.setString(4, memo);
+            ps.setString(5, accountBook.getUsername());
+            ps.setInt(6, date.getDayOfMonth());
+            ps.setInt(7, date.getMonthValue());
+            ps.setInt(8, date.getYear());
             ps.executeUpdate();
 
             con.close();

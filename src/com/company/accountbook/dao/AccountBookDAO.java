@@ -1,23 +1,75 @@
 package com.company.accountbook.dao;
 
-import com.company.accountbook.dto.Report;
+import com.company.accountbook.dto.AccountBook;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountBookDAO {
 
-    public void addAccountBook(String username){
+    public void insertAccountBook(String username, String password){
         Connection con = DBConnection.getConnection();
-        String sql = "insert into account_book value(?)";
+        String sql = "insert into account_book value(?, ?)";
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(2, username);
+            ps.setString(1, username);
+            ps.setString(2, password);
             ps.executeUpdate();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<AccountBook> findAll() {
+        Connection con = DBConnection.getConnection();
+        String sql = "select * from account_book";
+        Statement stat;
+        ResultSet rs;
+        List<AccountBook> accountBooks = new ArrayList<>();
+        try{
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+
+            while(rs.next()) {
+                String bookName = rs.getString("book_name");
+                String pass = rs.getString("pass");
+
+                accountBooks.add(new AccountBook(bookName, pass));
+            }
+            stat.close();
+            con.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return accountBooks;
+    }
+
+    public String findByBookName(String bookName) {
+        Connection con = DBConnection.getConnection();
+        String sql = "select book_name from account_book where bookName=?";
+        PreparedStatement ps;
+        ResultSet rs;
+        String selectedBookName = null;
+
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, bookName);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                selectedBookName = rs.getString("book_name");
+            }
+
+            con.close();
+            ps.close();
+            rs.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return selectedBookName;
     }
 }

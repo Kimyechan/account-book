@@ -11,7 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ReportService {
-    ReportDAO reportDAO = new ReportDAO(new AccountBook("yechan"));
+    ReportDAO reportDAO;
+
+    public ReportService(ReportDAO reportDAO) {
+        this.reportDAO = reportDAO;
+    }
+
+    public void addReport(boolean isIncome, String content, int price, String memo, LocalDate date){
+        reportDAO.insertReport(isIncome, content, price, memo, date);
+    }
 
     public List<Report> getDayReports(int year, int month, int day) {
         return reportDAO.findDayReport(year, month, day);

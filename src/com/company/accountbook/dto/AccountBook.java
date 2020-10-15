@@ -4,10 +4,18 @@ import java.util.List;
 
 public class AccountBook {
     private String username;
-    List<Report> reportList;
+    private String password;
+
+    public AccountBook() {
+    }
 
     public AccountBook(String username) {
         this.username = username;
+    }
+
+    public AccountBook(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -18,11 +26,11 @@ public class AccountBook {
         this.username = username;
     }
 
-    public List<Report> getReportList() {
-        return reportList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setReportList(List<Report> reportList) {
-        this.reportList = reportList;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
