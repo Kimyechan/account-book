@@ -15,7 +15,20 @@ public class ReportDAO {
         this.accountBook = accountBook;
     }
 
-    public void addReport(String content, int price, String memo, LocalDate date){
+    public void addReportList(ResultSet rs, List<Report> reports) throws SQLException {
+        while(rs.next()) {
+            String content = rs.getString("content");
+            int price = rs.getInt("price");
+            String memo = rs.getString("memo");
+            int newYear = rs.getInt("year");
+            int newMonth = rs.getInt("month");
+            int newDay = rs.getInt("day");
+
+            reports.add(new Report(content, price, memo, accountBook.getUsername(), newYear, newMonth, newDay));
+        }
+    }
+
+    public void insertReport(String content, int price, String memo, LocalDate date){
         Connection con = DBConnection.getConnection();
         String sql = "insert into report value(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
@@ -23,8 +36,8 @@ public class ReportDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, content);
             ps.setInt(2, price);
-            ps.setString(3, accountBook.getUsername());
-            ps.setString(4, memo);
+            ps.setString(3, memo);
+            ps.setString(4, accountBook.getUsername());
             ps.setInt(5 , date.getDayOfMonth());
             ps.setInt(6, date.getMonthValue());
             ps.setInt(7, date.getYear());
@@ -37,7 +50,7 @@ public class ReportDAO {
         }
     }
 
-    public List<Report> getDayReport(int year, int month, int day) {
+    public List<Report> findDayReport(int year, int month, int day) {
         List<Report> reports = new ArrayList<>();
         Connection con = DBConnection.getConnection();
         PreparedStatement ps;
@@ -63,11 +76,11 @@ public class ReportDAO {
         return reports;
     }
 
-    public List<Report> getWeekReport(LocalDate startDate, LocalDate endDate) {
+    public List<Report> findWeekReport(LocalDate startDate, LocalDate endDate) {
         return null;
     }
 
-    public List<Report> getMonthReport(int year, int month) {
+    public List<Report> findMonthReport(int year, int month) {
         List<Report> reports = new ArrayList<>();
         Connection con = DBConnection.getConnection();
         PreparedStatement ps;
@@ -92,7 +105,7 @@ public class ReportDAO {
         return reports;
     }
 
-    public List<Report> getYearReport(int year) {
+    public List<Report> findYearReport(int year) {
         List<Report> reports = new ArrayList<>();
         Connection con = DBConnection.getConnection();
         PreparedStatement ps;
@@ -116,16 +129,64 @@ public class ReportDAO {
         return reports;
     }
 
-    public void addReportList(ResultSet rs, List<Report> reports) throws SQLException {
-        while(rs.next()) {
-            String content = rs.getString("content");
-            int price = rs.getInt("price");
-            String memo = rs.getString("memo");
-            int newYear = rs.getInt("year");
-            int newMonth = rs.getInt("month");
-            int newDay = rs.getInt("day");
+    public List<Report> findIsComeReport(boolean isInCome) {
+        List<Report> reports = new ArrayList<>();
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
 
-            reports.add(new Report(content, price, memo, accountBook.getUsername(), newYear, newMonth, newDay));
+        String sql = "select * from report where account_book_name=? and isCome=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, accountBook.getUsername());
+            ps.setBoolean(2, isInCome);
+            rs = ps.executeQuery();
+
+            addReportList(rs, reports);
+
+            con.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return reports;
+    }
+
+    public List<Report> findIncomeCategoryReports(String content) {
+        return findReportByIsInComeAndCategory(true, content);
+    }
+
+    public List<Report> findExpenseCategoryReports(String content) {
+        return findReportByIsInComeAndCategory(false, content);
+    }
+
+    public List<Report> findReportByIsInComeAndCategory(boolean isIncome, String content) {
+        List<Report> reports = new ArrayList<>();
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+        String sql;
+        if(isIncome) {
+            sql = "select * from report where account_book_name=? and and content=? and isCome=1";
+        } else {
+            sql = "select * from report where account_book_name=? and and content=? and isCome=0";
+        }
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, accountBook.getUsername());
+            ps.setString(2, content);
+            rs = ps.executeQuery();
+
+            addReportList(rs, reports);
+
+            con.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return reports;
     }
 }
