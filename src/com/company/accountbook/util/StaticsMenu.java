@@ -2,19 +2,19 @@ package com.company.accountbook.util;
 
 import java.util.Scanner;
 
-public class StaticMenu {
+public class StaticsMenu {
     Scanner sc = new Scanner(System.in);
     private String number;
 
     // 싱글톤
-    private static StaticMenu instance;
+    private static StaticsMenu instance;
 
-    private StaticMenu() {
+    private StaticsMenu() {
     }
 
-    public static StaticMenu getInstance() {
+    public static StaticsMenu getInstance() {
         if (instance == null) {
-            instance = new StaticMenu();
+            instance = new StaticsMenu();
         }
         return instance;
     }
@@ -37,10 +37,19 @@ public class StaticMenu {
         }
 
         if (number.equals("1")) {
+            dayStatics();
         } else if (number.equals("2")) {
+            weekStatics();
         } else if (number.equals("3")) {
+            monthStatics();
         } else if (number.equals("4")) {
+            yearStatics();
         } else {
         }
     }
+
+    public void dayStatics() {}
+    public void weekStatics() {}
+    public void monthStatics() {}
+    public void yearStatics() {}
 }

@@ -2,12 +2,13 @@ package com.company.accountbook.util;
 
 import com.company.accountbook.dao.ReportDAO;
 import com.company.accountbook.dto.AccountBook;
+import com.company.accountbook.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputReportMenu {
-    ReportDAO reportDAO = new ReportDAO(new AccountBook(""));
+    ReportService reportService = new ReportService(new ReportDAO(new AccountBook("")));
     Scanner sc = new Scanner(System.in);
     private String number;
 
@@ -60,7 +61,7 @@ public class InputReportMenu {
         int price = sc.nextInt();
         System.out.print("메모: ");
         String memo = sc.nextLine();
-        reportDAO.insertReport(false, content, price, memo, LocalDate.of(year, month, day));
+        reportService.addReport(false, content, price, memo, LocalDate.of(year, month, day));
     }
 
     public void inputIncomeReport() {
@@ -75,6 +76,6 @@ public class InputReportMenu {
         int price = sc.nextInt();
         System.out.print("메모: ");
         String memo = sc.nextLine();
-        reportDAO.insertReport(true, content, price, memo, LocalDate.of(year, month, day));
+        reportService.addReport(true, content, price, memo, LocalDate.of(year, month, day));
     }
 }

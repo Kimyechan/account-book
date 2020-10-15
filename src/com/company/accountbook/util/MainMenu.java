@@ -37,7 +37,7 @@ public class MainMenu {
         } else if (number.equals("2")) {
             InputReportMenu.getInstance().inputReportMenuPrint();
         } else {
-            StaticMenu.getInstance().staticMenuPrint();
+            StaticsMenu.getInstance().staticMenuPrint();
         }
     }
 }
