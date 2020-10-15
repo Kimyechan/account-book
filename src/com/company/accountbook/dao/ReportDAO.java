@@ -24,7 +24,7 @@ public class ReportDAO {
             int newMonth = rs.getInt("month");
             int newDay = rs.getInt("day");
 
-            reports.add(new Report(content, price, memo, accountBook.getUsername(), newYear, newMonth, newDay));
+            reports.add(new Report(content, price, memo, accountBook.getBookName(), newYear, newMonth, newDay));
         }
     }
 
@@ -38,7 +38,7 @@ public class ReportDAO {
             ps.setString(2, content);
             ps.setInt(3, price);
             ps.setString(4, memo);
-            ps.setString(5, accountBook.getUsername());
+            ps.setString(5, accountBook.getBookName());
             ps.setInt(6, date.getDayOfMonth());
             ps.setInt(7, date.getMonthValue());
             ps.setInt(8, date.getYear());
@@ -60,7 +60,7 @@ public class ReportDAO {
         String sql = "select * from report where account_book_name=? and year=? and month=? and day=?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, accountBook.getUsername());
+            ps.setString(1, accountBook.getBookName());
             ps.setInt(2, year);
             ps.setInt(3, month);
             ps.setInt(4, day);
@@ -90,7 +90,7 @@ public class ReportDAO {
         String sql = "select * from report where account_book_name=? and year=? and month=?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, accountBook.getUsername());
+            ps.setString(1, accountBook.getBookName());
             ps.setInt(2, year);
             ps.setInt(3, month);
             rs = ps.executeQuery();
@@ -115,7 +115,7 @@ public class ReportDAO {
         String sql = "select * from report where account_book_name=? and year=?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, accountBook.getUsername());
+            ps.setString(1, accountBook.getBookName());
             ps.setInt(2, year);
             rs = ps.executeQuery();
 
@@ -139,7 +139,7 @@ public class ReportDAO {
         String sql = "select * from report where account_book_name=? and isCome=?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, accountBook.getUsername());
+            ps.setString(1, accountBook.getBookName());
             ps.setBoolean(2, isInCome);
             rs = ps.executeQuery();
 
@@ -176,7 +176,7 @@ public class ReportDAO {
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, accountBook.getUsername());
+            ps.setString(1, accountBook.getBookName());
             ps.setString(2, content);
             rs = ps.executeQuery();
 
