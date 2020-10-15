@@ -62,8 +62,11 @@ public class Menu {
 
         if (num1.equals("1")) {
         } else if (num1.equals("2")) {
+
         } else if (num1.equals("3")) {
+
         } else if (num1.equals("4")) {
+
         } else {
             mainMenuPrint();
         }
@@ -90,7 +93,6 @@ public class Menu {
         } else {
             mainMenuPrint();
         }
-
     }
 
     public void staticMenuPrint() {

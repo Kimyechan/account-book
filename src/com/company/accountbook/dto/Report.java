@@ -21,4 +21,8 @@ public class Report {
         this.month = month;
         this.day = day;
     }
+
+    public String getContent() {
+        return content;
+    }
 }

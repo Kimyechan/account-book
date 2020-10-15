@@ -1,18 +1,9 @@
 package com.company.accountbook;
 
-<<<<<<< HEAD
-import com.company.accountbook.dao.AccountBookDAO;
-import com.company.accountbook.dao.ReportDAO;
-import com.company.accountbook.dto.AccountBook;
-import com.company.accountbook.dto.Report;
-
-import java.time.LocalDate;
-=======
-import com.company.accountbook.service.MonthCheckAccountBook;
+import com.company.accountbook.service.checkaccountbook.MonthCheckAccountBook;
 import com.company.accountbook.util.Menu;
 
 import java.util.Scanner;
->>>>>>> jb
 
 public class Main {
     public static void main(String[] args) {
@@ -25,5 +16,12 @@ public class Main {
 
         // 메인 메뉴 출력
         menu.mainMenuPrint();
+//        ReportDAO reportDAO = new ReportDAO(new AccountBook("yechan"));
+//        reportDAO.addReport("aaaaaa", 20000, "aaaa", LocalDate.of(2020, 10, 10));
+//
+//        List<Report> reports = reportDAO.getMonthReport(2020, 10);
+//        for(Report report : reports) {
+//            System.out.println(report.getContent());
+//        }
     }
 }
