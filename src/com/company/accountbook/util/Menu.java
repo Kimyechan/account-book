@@ -101,9 +101,8 @@ public class Menu {
         System.out.println("0. 나가기");
         System.out.print(">> ");
         num3 = sc.nextLine();
-        System.out.println(
+        System.out.println();
 
-        );
         while (!num3.equals("1") && !num3.equals("2") && !num3.equals("3") && !num3.equals("4") && !num3.equals("0")) {
             System.out.println("다시 입력하세요.");
             System.out.print(">> ");

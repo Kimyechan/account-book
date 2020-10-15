@@ -17,7 +17,7 @@ public class MonthCheckAccountBook implements CheckAccountBook {
         this.year = year;
         this.month = month;
         this.day = day;
-        return accountBookDAO.getDayReport(year, month, day);
+        return accountBookDAO.getReport(year, month, 0);
     }
 
     public void showStatics() {

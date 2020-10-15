@@ -9,7 +9,7 @@ import java.util.List;
 
 public class YearCheckAccountBook implements CheckAccountBook {
     AccountBookDAO accountBookDAO = new AccountBookDAO();
-    int year = 0;
+    int year;
     int month = 0;
     int day = 0;
 
@@ -17,7 +17,7 @@ public class YearCheckAccountBook implements CheckAccountBook {
         this.year = year;
         this.month = month;
         this.day = day;
-        return accountBookDAO.getDayReport(year, month, day);
+        return accountBookDAO.getReport(year, 0, 0);
     }
 
     public void showStatics() {
@@ -33,6 +33,6 @@ public class YearCheckAccountBook implements CheckAccountBook {
     }
 
     public void printAccount() {
-
+        System.out.println(checkReport(year, 0, 0));
     }
 }
