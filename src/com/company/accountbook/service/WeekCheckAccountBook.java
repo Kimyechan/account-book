@@ -25,9 +25,11 @@ public class WeekCheckAccountBook implements CheckAccountBook{
     }
 
     void showStatics(ExpenseCategory expenseCategory) {
+
     }
 
     void showStatics(IncomeCategory incomeCategory) {
+
     }
 
     public void printAccount() {
