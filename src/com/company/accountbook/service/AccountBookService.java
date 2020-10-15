@@ -8,7 +8,7 @@ import java.util.List;
 public class AccountBookService {
     AccountBookDAO accountBookDAO = new AccountBookDAO();
 
-    public void addAccountBook(String bookName, String pass){
+    public void addAccountBook(String bookName, String pass) {
         accountBookDAO.insertAccountBook(bookName, pass);
     }
 
@@ -19,7 +19,7 @@ public class AccountBookService {
     public boolean isExistedAccountBook(String bookName) {
         String selectedBookName = accountBookDAO.findByBookName(bookName);
 
-        if(selectedBookName != null) {
+        if (selectedBookName != null) {
             return true;
         } else {
             return false;
