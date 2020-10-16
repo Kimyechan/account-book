@@ -71,6 +71,6 @@ public class ReportServiceTest {
             System.out.println(report);
         }
 
-
+        System.out.println(reportService.getDayExpenseStatics(2020, 10, 16));
     }
 }
