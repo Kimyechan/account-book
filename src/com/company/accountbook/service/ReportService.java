@@ -1,11 +1,9 @@
 package com.company.accountbook.service;
 
 import com.company.accountbook.dao.ReportDAO;
-import com.company.accountbook.dto.AccountBook;
 import com.company.accountbook.dto.Report;
 import com.company.accountbook.vo.ExpenseCategory;
 import com.company.accountbook.vo.IncomeCategory;
-import jdk.jfr.Category;
 
 import java.time.LocalDate;
 import java.util.List;

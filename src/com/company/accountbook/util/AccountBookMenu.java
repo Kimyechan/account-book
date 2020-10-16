@@ -1,13 +1,13 @@
 package com.company.accountbook.util;
 
-import com.company.accountbook.dto.AccountBook;
-import com.company.accountbook.dto.Report;
 import com.company.accountbook.service.AccountBookService;
+import com.company.accountbook.service.ReportService;
 
 import java.util.Scanner;
 
 public class AccountBookMenu {
-    AccountBookService accountBookService;
+    AccountBookService accountBookService = new AccountBookService();
+    ReportService reportService = new ReportService();
     private String accountBookName;
     private String password;
 
@@ -27,7 +27,6 @@ public class AccountBookMenu {
     // 가계부 메뉴
     public void accountBookMenu() {
         Scanner sc = new Scanner(System.in);
-        AccountBookService accountBookService = new AccountBookService();
 
         // 초기 화면 출력 (이번달 달력)
         System.out.println("1. 가계부 조회");
@@ -49,8 +48,7 @@ public class AccountBookMenu {
                 System.out.print("다시 입력하세요: ");
                 accountBookName = sc.nextLine();
             }
-            Report.setAccountBookName(accountBookName);
-            System.out.println(Report.getAccountBookName());
+            reportService.setBookNameForReportList(accountBookName);
             System.out.println();
             System.out.print("비밀번호를 입력하세요: ");
             password = sc.nextLine();

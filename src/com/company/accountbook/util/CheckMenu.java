@@ -10,6 +10,10 @@ public class CheckMenu {
     ReportService reportService = new ReportService();
     Scanner sc = new Scanner(System.in);
     private String number;
+    private int year;
+    private int month;
+    private int day;
+
 
     // 싱글톤
     private static CheckMenu instance;
@@ -51,6 +55,8 @@ public class CheckMenu {
         } else {
             MainMenu.getInstance().mainMenuPrint();
         }
+        System.out.println();
+        checkMenuPrint();
     }
 
     public void dayCheckReport() {
@@ -58,14 +64,14 @@ public class CheckMenu {
         System.out.print(">> ");
         try {
             String[] date = sc.nextLine().split("-");
-            int year = Integer.parseInt(date[0]);
-            int month = Integer.parseInt(date[1]);
-            int day = Integer.parseInt(date[2]);
-            System.out.println(reportService.getDayReports(year, month, day));
+            year = Integer.parseInt(date[0]);
+            month = Integer.parseInt(date[1]);
+            day = Integer.parseInt(date[2]);
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("형식에 맞게 입력하세요.");
             dayCheckReport();
         }
+        System.out.println(reportService.getDayReports(year, month, day));
     }
 
     public void weekCheckReport() {
@@ -77,24 +83,24 @@ public class CheckMenu {
         System.out.print(">> ");
        try {
            String[] date = sc.nextLine().split("-");
-           int year = Integer.parseInt(date[0]);
-           int month = Integer.parseInt(date[1]);
-           System.out.println(reportService.getMonthReports(year, month));
+           year = Integer.parseInt(date[0]);
+           month = Integer.parseInt(date[1]);
        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
            System.out.println("형식에 맞게 입력하세요.");
            monthCheckReport();
        }
+        System.out.println(reportService.getMonthReports(year, month));
     }
 
     public void yearCheckReport() {
         System.out.println("조회를 원하는 연도를 입력하세요. ex) 2020");
         System.out.print(">> ");
         try {
-            int year = sc.nextInt();
-            System.out.println(reportService.getYearReports(year));
+            year = sc.nextInt();
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("형식에 맞게 입력하세요.");
             yearCheckReport();
         }
+        System.out.println(reportService.getYearReports(year));
     }
 }
