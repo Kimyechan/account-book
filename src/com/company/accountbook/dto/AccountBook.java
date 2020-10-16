@@ -1,6 +1,7 @@
 package com.company.accountbook.dto;
 
 public class AccountBook {
+    private int bookId;
     private String bookName;
     private String password;
 

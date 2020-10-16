@@ -47,6 +47,10 @@ public class ReportService {
         return reportDAO.findExpenseCategoryReports(content);
     }
 
+    public void setBookNameForReportList(String bookName) {
+        Report.setAccountBookName(bookName);
+    }
+
     public void showStatics() {
 
     }
