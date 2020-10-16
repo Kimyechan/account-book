@@ -39,6 +39,7 @@ public class Report {
 
     public Report(int reportId, boolean isIncome, String paymentMethod, String category, int price, String content, String accountBookName, int year, int month, int day) {
         this.reportId = reportId;
+        this.isIncome = isIncome;
         this.paymentMethod = paymentMethod;
         this.category = category;
         this.price = price;
