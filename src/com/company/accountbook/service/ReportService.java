@@ -9,13 +9,11 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Stream;
 
 public class ReportService {
     ReportDAO reportDAO = new ReportDAO();
 
-    public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date){
+    public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date) {
         reportDAO.insertReport(isIncome, paymentMethod, category, price, content, date);
     }
 
@@ -51,23 +49,20 @@ public class ReportService {
 
     public Map<String, Double> getDayExpenseStatics(int year, int month, int day) {
         List<Report> reports = getDayReports(year, month, day);
-        Map<String, Double> statics = new HashMap<>();
-
-        Integer priceOfFood = getCategoryPrice(reports, ExpenseCategory.FOOD);
-        Integer priceOfCloth = getCategoryPrice(reports, ExpenseCategory.CLOTH);
-        Integer priceOfTax = getCategoryPrice(reports, ExpenseCategory.TAX);
-
-        Integer sum = priceOfFood + priceOfCloth + priceOfTax;
-
-        statics.put("food", (double) (priceOfFood / sum) * 100);
-        statics.put("cloth", (double) (priceOfCloth / sum) * 100);
-        statics.put("tax", (double) (priceOfTax / sum) * 100);
-
-        return statics;
+        return calculateExpense(reports);
     }
 
     public Map<String, Double> getMonthExpenseStatics(int year, int month) {
         List<Report> reports = getMonthReports(year, month);
+        return calculateExpense(reports);
+    }
+
+    public Map<String, Double> getYearExpenseStatics(int year) {
+        List<Report> reports = getYearReports(year);
+        return calculateExpense(reports);
+    }
+
+    private Map<String, Double> calculateExpense(List<Report> reports) {
         Map<String, Double> statics = new HashMap<>();
 
         Integer priceOfFood = getCategoryPrice(reports, ExpenseCategory.FOOD);
@@ -89,4 +84,31 @@ public class ReportService {
                 .map(Report::getPrice)
                 .reduce(0, Integer::sum);
     }
+
+    public Integer calculateCurrentAllMoney() {
+        List<Report> reports = reportDAO.findAllReport(Report.getAccountBookName());
+
+        return getCurrentMoneyStream(reports);
+    }
+
+    public Integer calculateCurrentMonthMoney(int year, int month) {
+        List<Report> reports = reportDAO.findMonthReport(year, month);
+
+        return getCurrentMoneyStream(reports);
+    }
+
+    public Integer calculateCurrentYearMoney(int year) {
+        List<Report> reports = reportDAO.findYearReport(year);
+
+        return getCurrentMoneyStream(reports);
+    }
+
+    public Integer getCurrentMoneyStream(List<Report> reports) {
+        return reports.stream().filter(report -> !report.isIncome()).map(Report::getPrice).reduce(0, Integer::sum)
+                - reports.stream().filter(Report::isIncome).map(Report::getPrice).reduce(0, Integer::sum);
+    }
+    public void showStatics() {
+
+    }
+
 }

@@ -188,4 +188,28 @@ public class ReportDAO {
         }
         return reports;
     }
+
+    public List<Report> findAllReport(String accountBookName) {
+        List<Report> reports = new ArrayList<>();
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+
+        String sql = "select * from report where account_book_name=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Report.getAccountBookName());
+
+            rs = ps.executeQuery();
+
+            addReportList(rs, reports);
+
+            con.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return reports;
+    }
 }
