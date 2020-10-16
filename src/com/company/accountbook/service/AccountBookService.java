@@ -16,10 +16,21 @@ public class AccountBookService {
         return accountBookDAO.findAll();
     }
 
-    public boolean isExistedAccountBook(String bookName) {
-        String selectedBookName = accountBookDAO.findByBookName(bookName);
+    public boolean checkExisting(String bookName) {
+        AccountBook selectedBook = accountBookDAO.findByBookName(bookName);
 
-        if (selectedBookName != null) {
+        if (selectedBook != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkAccessRight(String bookName, String password) {
+        AccountBook selectedBook = accountBookDAO.findByBookName(bookName);
+        String rightPass = selectedBook.getPassword();
+
+        if(password.equals(rightPass)) {
             return true;
         } else {
             return false;

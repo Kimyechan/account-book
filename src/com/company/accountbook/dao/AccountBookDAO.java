@@ -47,12 +47,13 @@ public class AccountBookDAO {
         return accountBooks;
     }
 
-    public String findByBookName(String bookName) {
+    public AccountBook findByBookName(String bookName) {
         Connection con = DBConnection.getConnection();
-        String sql = "select book_name from account_book where bookName=?";
+        String sql = "select * from account_book where bookName=?";
         PreparedStatement ps;
         ResultSet rs;
         String selectedBookName = null;
+        String selectedBookPass = null;
 
         try{
             ps = con.prepareStatement(sql);
@@ -61,6 +62,7 @@ public class AccountBookDAO {
 
             while(rs.next()) {
                 selectedBookName = rs.getString("book_name");
+                selectedBookPass = rs.getString("pass");
             }
 
             con.close();
@@ -70,6 +72,6 @@ public class AccountBookDAO {
             ex.printStackTrace();
         }
 
-        return selectedBookName;
+        return new AccountBook(selectedBookName, selectedBookPass);
     }
 }
