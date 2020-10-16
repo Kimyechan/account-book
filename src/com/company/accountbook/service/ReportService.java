@@ -85,30 +85,81 @@ public class ReportService {
                 .reduce(0, Integer::sum);
     }
 
-    public Integer calculateCurrentAllMoney() {
+    public Map<String, Double> getMonthIncomeStatics(int year, int month) {
+        List<Report> reports = getMonthReports(year, month);
+        return calculateIncome(reports);
+    }
+
+    public Map<String, Double> getYearIncomeStatics(int year) {
+        List<Report> reports = getYearReports(year);
+        return calculateIncome(reports);
+    }
+
+    private Map<String, Double> calculateIncome(List<Report> reports) {
+        Map<String, Double> statics = new HashMap<>();
+
+        Integer priceOfSALARY = getCategoryPrice(reports, IncomeCategory.SALARY);
+        Integer priceOfPOCKET = getCategoryPrice(reports, IncomeCategory.POCKET_MONEY);
+        Integer priceOfFINANCIAL = getCategoryPrice(reports, IncomeCategory.FINANCIAL_MONEY);
+        Integer priceOfETC = getCategoryPrice(reports, IncomeCategory.ETC);
+
+        Integer sum = priceOfSALARY + priceOfPOCKET + priceOfFINANCIAL + priceOfETC;
+
+        statics.put("salary", (double) (priceOfSALARY / sum) * 100);
+        statics.put("pocket", (double) (priceOfPOCKET / sum) * 100);
+        statics.put("financial", (double) (priceOfFINANCIAL / sum) * 100);
+        statics.put("etc", (double) (priceOfETC / sum) * 100);
+
+        return statics;
+    }
+
+    public Integer getCategoryPrice(List<Report> reports, IncomeCategory category) {
+        return reports.stream()
+                .filter(report -> report.getCategory().equals(category.toString()))
+                .map(Report::getPrice)
+                .reduce(0, Integer::sum);
+    }
+
+
+    public Integer getExpenseAllStatics() {
+        List<Report> reports = getIsComeReports(false);
+
+        return reports.stream().map(Report::getPrice).reduce(0, Integer::sum);
+    }
+
+    public Integer getIncomeAllStatics() {
+        List<Report> reports = getIsComeReports(true);
+
+        return reports.stream().map(Report::getPrice).reduce(0, Integer::sum);
+    }
+
+    public Map<String, Integer> calculateCurrentAllMoney() {
         List<Report> reports = reportDAO.findAllReport(Report.getAccountBookName());
 
         return getCurrentMoneyStream(reports);
     }
 
-    public Integer calculateCurrentMonthMoney(int year, int month) {
+    public Map<String, Integer> calculateCurrentMonthMoney(int year, int month) {
         List<Report> reports = reportDAO.findMonthReport(year, month);
 
         return getCurrentMoneyStream(reports);
     }
 
-    public Integer calculateCurrentYearMoney(int year) {
+    public Map<String, Integer> calculateCurrentYearMoney(int year) {
         List<Report> reports = reportDAO.findYearReport(year);
 
         return getCurrentMoneyStream(reports);
     }
 
-    public Integer getCurrentMoneyStream(List<Report> reports) {
-        return reports.stream().filter(report -> !report.isIncome()).map(Report::getPrice).reduce(0, Integer::sum)
-                - reports.stream().filter(Report::isIncome).map(Report::getPrice).reduce(0, Integer::sum);
-    }
-    public void showStatics() {
+    public Map<String, Integer> getCurrentMoneyStream(List<Report> reports) {
+        Map<String, Integer> map = new HashMap<>();
 
-    }
+        Integer expense = reports.stream().filter(report -> !report.isIncome()).map(Report::getPrice).reduce(0, Integer::sum);
+        map.put("expense", expense);
 
+        Integer income = reports.stream().filter(Report::isIncome).map(Report::getPrice).reduce(0, Integer::sum);
+        map.put("income", income);
+
+        return map;
+    }
 }
