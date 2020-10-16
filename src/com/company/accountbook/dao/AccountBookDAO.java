@@ -49,7 +49,7 @@ public class AccountBookDAO {
 
     public AccountBook findByBookName(String bookName) {
         Connection con = DBConnection.getConnection();
-        String sql = "select * from account_book where bookName=?";
+        String sql = "select * from account_book where book_name=?";
         PreparedStatement ps;
         ResultSet rs;
         String selectedBookName = null;
