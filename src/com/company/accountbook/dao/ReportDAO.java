@@ -12,31 +12,35 @@ public class ReportDAO {
 
     public void addReportList(ResultSet rs, List<Report> reports) throws SQLException {
         while(rs.next()) {
+            int reportId = rs.getInt("report_id");
+            boolean isIncome = rs.getBoolean("is_income");
+            String paymentMethod = rs.getString("payment_method");
             String content = rs.getString("content");
             int price = rs.getInt("price");
             String memo = rs.getString("memo");
             int newYear = rs.getInt("year");
             int newMonth = rs.getInt("month");
             int newDay = rs.getInt("day");
-
-            reports.add(new Report(content, price, memo, Report.getAccountBookName(), newYear, newMonth, newDay));
+            reports.add(new Report(reportId, isIncome, paymentMethod, content, price, memo, Report.getAccountBookName(), newYear, newMonth, newDay));
         }
     }
 
-    public void insertReport(boolean isIncome, String content, int price, String memo, LocalDate date){
+    public void insertReport(boolean isIncome, String paymentMethod, String content, int price, String memo, LocalDate date){
         Connection con = DBConnection.getConnection();
-        String sql = "insert into report value(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into report(is_income, payment_method, content, price, memo, account_book_name, day, month, year) " +
+                "value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setBoolean(1, isIncome);
-            ps.setString(2, content);
-            ps.setInt(3, price);
-            ps.setString(4, memo);
-            ps.setString(5, Report.getAccountBookName());
-            ps.setInt(6, date.getDayOfMonth());
-            ps.setInt(7, date.getMonthValue());
-            ps.setInt(8, date.getYear());
+            ps.setString(2, paymentMethod);
+            ps.setString(3, content);
+            ps.setInt(4, price);
+            ps.setString(5, memo);
+            ps.setString(6, Report.getAccountBookName());
+            ps.setInt(7, date.getDayOfMonth());
+            ps.setInt(8, date.getMonthValue());
+            ps.setInt(9, date.getYear());
             ps.executeUpdate();
 
             con.close();
@@ -131,7 +135,7 @@ public class ReportDAO {
         PreparedStatement ps;
         ResultSet rs;
 
-        String sql = "select * from report where account_book_name=? and isCome=?";
+        String sql = "select * from report where account_book_name=? and is_income=?";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, Report.getAccountBookName());
@@ -164,9 +168,9 @@ public class ReportDAO {
         ResultSet rs;
         String sql;
         if(isIncome) {
-            sql = "select * from report where account_book_name=? and and content=? and isCome=1";
+            sql = "select * from report where account_book_name=? and content=? and is_income=1";
         } else {
-            sql = "select * from report where account_book_name=? and and content=? and isCome=0";
+            sql = "select * from report where account_book_name=? and content=? and is_income=0";
         }
 
         try {

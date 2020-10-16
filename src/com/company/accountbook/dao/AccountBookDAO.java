@@ -13,12 +13,20 @@ public class AccountBookDAO {
         String sql = "insert into account_book value(?, ?)";
         PreparedStatement ps;
         try {
+
+            con.setAutoCommit(false);
+
             ps = con.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);
             ps.executeUpdate();
+
+            con.commit();
         } catch(SQLException ex) {
             ex.printStackTrace();
+//            try(con.rollback()) {
+//
+//            }
         }
     }
 

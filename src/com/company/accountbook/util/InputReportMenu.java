@@ -61,7 +61,7 @@ public class InputReportMenu {
         int price = sc.nextInt();
         System.out.print("메모: ");
         String memo = sc.nextLine();
-        reportService.addReport(false, content, price, memo, LocalDate.of(year, month, day));
+//        reportService.addReport(false, content, price, memo, LocalDate.of(year, month, day));
     }
 
     public void inputIncomeReport() {
@@ -76,6 +76,6 @@ public class InputReportMenu {
         int price = sc.nextInt();
         System.out.print("메모: ");
         String memo = sc.nextLine();
-        reportService.addReport(true, content, price, memo, LocalDate.of(year, month, day));
+//        reportService.addReport(true, content, price, memo, LocalDate.of(year, month, day));
     }
 }

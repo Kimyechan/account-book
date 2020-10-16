@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ReportService {
-    ReportDAO reportDAO;
+    ReportDAO reportDAO = new ReportDAO();
 
-    public void addReport(boolean isIncome, String content, int price, String memo, LocalDate date){
-        reportDAO.insertReport(isIncome, content, price, memo, date);
+    public void addReport(boolean isIncome, String paymentMethod, String content, int price, String memo, LocalDate date){
+        reportDAO.insertReport(isIncome, paymentMethod, content, price, memo, date);
     }
 
     public List<Report> getDayReports(int year, int month, int day) {
