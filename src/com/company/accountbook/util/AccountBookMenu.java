@@ -30,9 +30,10 @@ public class AccountBookMenu {
 
         // 초기 화면 출력 (이번달 달력)
         System.out.println("1. 가계부 조회");
-        System.out.println("2. 가계부 추가");
+        System.out.println("2. 가계부 생성");
         System.out.print(">> ");
         String number = sc.nextLine();
+        System.out.println();
 
         while (!number.equals("1") && !number.equals("2")) {
             System.out.println("다시 입력하세요.");
@@ -63,6 +64,9 @@ public class AccountBookMenu {
             System.out.print("비밀번호: ");
             String pass = sc.nextLine();
             accountBookService.addAccountBook(bookName, pass);
+            reportService.setBookNameForReportList(bookName);
+            System.out.println();
+            accountBookMenu();
         }
     }
 }

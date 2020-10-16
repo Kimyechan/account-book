@@ -11,7 +11,7 @@ import java.util.List;
 public class ReportService {
     ReportDAO reportDAO = new ReportDAO();
 
-    public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date){
+    public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date) {
         reportDAO.insertReport(isIncome, paymentMethod, category, price, content, date);
     }
 
@@ -46,6 +46,6 @@ public class ReportService {
     }
 
     public void showStatics() {
-
     }
+
 }

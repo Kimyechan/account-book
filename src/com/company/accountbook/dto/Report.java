@@ -15,8 +15,9 @@ public class Report {
     public Report() {
     }
 
-    public Report(String category, int price, String content, String accountBookName, int year, int month, int day) {
+    public Report(boolean isIncome, String category, int price, String content, String accountBookName, int year, int month, int day) {
         this.category = category;
+        this.isIncome = isIncome;
         this.price = price;
         this.content = content;
         this.accountBookName = accountBookName;
@@ -39,6 +40,7 @@ public class Report {
 
     public Report(int reportId, boolean isIncome, String paymentMethod, String category, int price, String content, String accountBookName, int year, int month, int day) {
         this.reportId = reportId;
+        this.isIncome = isIncome;
         this.paymentMethod = paymentMethod;
         this.category = category;
         this.price = price;
@@ -131,16 +133,19 @@ public class Report {
 
     @Override
     public String toString() {
-        return "Report{" +
-                "reportId=" + reportId +
-                ", isIncome=" + isIncome +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                ", content='" + category + '\'' +
-                ", price=" + price +
-                ", memo='" + content + '\'' +
-                ", year=" + year +
-                ", month=" + month +
-                ", day=" + day +
-                '}';
+        if (isIncome) {
+            return year + "년 " + month + "월 " + day + "일" + "\n" +
+                    "카테고리: " + category + "\n" +
+                    "수입 내역: " + content + "\n" +
+                    "금액: " + price + "\n"
+                    ;
+        } else {
+            return year + "년 " + month + "월 " + day + "일" + "\n" +
+                    "카테고리: " + category + "\n" +
+                    "지출 내역: " + content + "\n" +
+                    "금액: " + price + "\n" +
+                    "지불 수단: " + paymentMethod + "\n"
+                    ;
+        }
     }
 }

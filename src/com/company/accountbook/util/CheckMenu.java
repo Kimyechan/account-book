@@ -1,7 +1,5 @@
 package com.company.accountbook.util;
 
-import com.company.accountbook.dao.ReportDAO;
-import com.company.accountbook.dto.AccountBook;
 import com.company.accountbook.service.ReportService;
 
 import java.util.Scanner;
@@ -71,25 +69,32 @@ public class CheckMenu {
             System.out.println("형식에 맞게 입력하세요.");
             dayCheckReport();
         }
-        System.out.println(reportService.getDayReports(year, month, day));
+        if (reportService.getDayReports(year, month, day).isEmpty()) {
+            System.out.println("내역 없음");
+        } else {
+            reportService.getDayReports(year, month, day).forEach(System.out::println);
+        }
     }
 
     public void weekCheckReport() {
-
     }
 
     public void monthCheckReport() {
         System.out.println("조회를 원하는 달을 입력하세요. ex) 2020-10");
         System.out.print(">> ");
-       try {
-           String[] date = sc.nextLine().split("-");
-           year = Integer.parseInt(date[0]);
-           month = Integer.parseInt(date[1]);
-       } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-           System.out.println("형식에 맞게 입력하세요.");
-           monthCheckReport();
-       }
-        System.out.println(reportService.getMonthReports(year, month));
+        try {
+            String[] date = sc.nextLine().split("-");
+            year = Integer.parseInt(date[0]);
+            month = Integer.parseInt(date[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("형식에 맞게 입력하세요.");
+            monthCheckReport();
+        }
+        if (reportService.getMonthReports(year, month).isEmpty()) {
+            System.out.println("내역 없음");
+        } else {
+            reportService.getMonthReports(year, month).forEach(System.out::println);
+        }
     }
 
     public void yearCheckReport() {
@@ -101,6 +106,10 @@ public class CheckMenu {
             System.out.println("형식에 맞게 입력하세요.");
             yearCheckReport();
         }
-        System.out.println(reportService.getYearReports(year));
+        if (reportService.getYearReports(year).isEmpty()) {
+            System.out.println("내역 없음");
+        } else {
+            reportService.getYearReports(year).forEach(System.out::println);
+        }
     }
 }

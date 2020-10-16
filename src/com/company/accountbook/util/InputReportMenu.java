@@ -2,6 +2,7 @@ package com.company.accountbook.util;
 
 import com.company.accountbook.service.ReportService;
 import com.company.accountbook.vo.ExpenseCategory;
+import com.company.accountbook.vo.IncomeCategory;
 import com.company.accountbook.vo.PayCategory;
 
 import java.time.LocalDate;
@@ -51,8 +52,10 @@ public class InputReportMenu {
         } else if (number.equals("2")) {
             inputIncomeReport();
         } else {
-
+            MainMenu.getInstance().mainMenuPrint();
         }
+        System.out.println();
+        inputReportMenuPrint();
     }
 
     public void inputExpenseReport() {
@@ -129,8 +132,31 @@ public class InputReportMenu {
             System.out.println(e.getMessage());
             inputExpenseReport();
         }
-        System.out.print("카테고리: ");
-        String category = sc.nextLine();
+        System.out.println("카테고리를 선택하세요.");
+        System.out.println("1. " + IncomeCategory.SALARY.name());
+        System.out.println("2. " + IncomeCategory.POCKET_MONEY.name());
+        System.out.println("3. " + IncomeCategory.FINANCIAL_MONEY.name());
+        System.out.println("4. " + IncomeCategory.ETC.name());
+        System.out.print(">> ");
+        number = sc.nextLine();
+
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4")) {
+            System.out.println("다시 입력하세요.");
+            System.out.print(">> ");
+            number = sc.nextLine();
+            System.out.println();
+        }
+
+        if (number.equals("1")) {
+            paymentMethod = IncomeCategory.SALARY.name();
+        } else if (number.equals("2")) {
+            paymentMethod = IncomeCategory.POCKET_MONEY.name();
+        }else if (number.equals("3")) {
+            paymentMethod = IncomeCategory.FINANCIAL_MONEY.name();
+        } else{
+            paymentMethod = IncomeCategory.ETC.name();
+        }
+
         System.out.print("수입 내역: ");
         String content = sc.nextLine();
         System.out.print("금액: ");
