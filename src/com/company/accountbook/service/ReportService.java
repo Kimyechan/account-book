@@ -11,8 +11,8 @@ import java.util.List;
 public class ReportService {
     ReportDAO reportDAO = new ReportDAO();
 
-    public void addReport(boolean isIncome, String paymentMethod, String content, int price, String memo, LocalDate date){
-        reportDAO.insertReport(isIncome, paymentMethod, content, price, memo, date);
+    public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date){
+        reportDAO.insertReport(isIncome, paymentMethod, category, price, content, date);
     }
 
     public List<Report> getDayReports(int year, int month, int day) {

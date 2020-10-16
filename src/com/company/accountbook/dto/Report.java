@@ -5,9 +5,9 @@ public class Report {
     private int reportId;
     private boolean isIncome;
     private String paymentMethod;
-    private String content;
+    private String category;
     private int price;
-    private String memo;
+    private String content;
     private int year;
     private int month;
     private int day;
@@ -15,34 +15,34 @@ public class Report {
     public Report() {
     }
 
-    public Report(String content, int price, String memo, String accountBookName, int year, int month, int day) {
-        this.content = content;
+    public Report(String category, int price, String content, String accountBookName, int year, int month, int day) {
+        this.category = category;
         this.price = price;
-        this.memo = memo;
+        this.content = content;
         this.accountBookName = accountBookName;
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
-    public Report(boolean isIncome, String paymentMethod, String content, int price, String memo, String accountBookName, int year, int month, int day) {
+    public Report(boolean isIncome, String paymentMethod, String category, int price, String content, String accountBookName, int year, int month, int day) {
         this.isIncome = isIncome;
         this.paymentMethod = paymentMethod;
-        this.content = content;
+        this.category = category;
         this.price = price;
-        this.memo = memo;
+        this.content = content;
         this.accountBookName = accountBookName;
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
-    public Report(int reportId, boolean isIncome, String paymentMethod, String content, int price, String memo, String accountBookName, int year, int month, int day) {
+    public Report(int reportId, boolean isIncome, String paymentMethod, String category, int price, String content, String accountBookName, int year, int month, int day) {
         this.reportId = reportId;
         this.paymentMethod = paymentMethod;
-        this.content = content;
+        this.category = category;
         this.price = price;
-        this.memo = memo;
+        this.content = content;
         this.accountBookName = accountBookName;
         this.year = year;
         this.month = month;
@@ -73,12 +73,12 @@ public class Report {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getContent() {
-        return content;
+    public String getCategory() {
+        return category;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getPrice() {
@@ -89,12 +89,12 @@ public class Report {
         this.price = price;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getContent() {
+        return content;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getYear() {
@@ -135,9 +135,9 @@ public class Report {
                 "reportId=" + reportId +
                 ", isIncome=" + isIncome +
                 ", paymentMethod='" + paymentMethod + '\'' +
-                ", content='" + content + '\'' +
+                ", content='" + category + '\'' +
                 ", price=" + price +
-                ", memo='" + memo + '\'' +
+                ", memo='" + content + '\'' +
                 ", year=" + year +
                 ", month=" + month +
                 ", day=" + day +

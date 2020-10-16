@@ -1,6 +1,5 @@
 package com.company.accountbook.dao;
 
-import com.company.accountbook.dto.AccountBook;
 import com.company.accountbook.dto.Report;
 
 import java.sql.*;
@@ -15,26 +14,26 @@ public class ReportDAO {
             int reportId = rs.getInt("report_id");
             boolean isIncome = rs.getBoolean("is_income");
             String paymentMethod = rs.getString("payment_method");
-            String content = rs.getString("content");
+            String category = rs.getString("category");
             int price = rs.getInt("price");
-            String memo = rs.getString("memo");
+            String content = rs.getString("content");
             int newYear = rs.getInt("year");
             int newMonth = rs.getInt("month");
             int newDay = rs.getInt("day");
-            reports.add(new Report(reportId, isIncome, paymentMethod, content, price, memo, Report.getAccountBookName(), newYear, newMonth, newDay));
+            reports.add(new Report(reportId, isIncome, paymentMethod, category, price, content, Report.getAccountBookName(), newYear, newMonth, newDay));
         }
     }
 
-    public void insertReport(boolean isIncome, String paymentMethod, String content, int price, String memo, LocalDate date){
+    public void insertReport(boolean isIncome, String paymentMethod, String category, int price, String memo, LocalDate date){
         Connection con = DBConnection.getConnection();
-        String sql = "insert into report(is_income, payment_method, content, price, memo, account_book_name, day, month, year) " +
+        String sql = "insert into report(is_income, payment_method, category, price, content, account_book_name, day, month, year) " +
                 "value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setBoolean(1, isIncome);
             ps.setString(2, paymentMethod);
-            ps.setString(3, content);
+            ps.setString(3, category);
             ps.setInt(4, price);
             ps.setString(5, memo);
             ps.setString(6, Report.getAccountBookName());
