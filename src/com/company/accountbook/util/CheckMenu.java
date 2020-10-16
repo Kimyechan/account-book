@@ -7,7 +7,7 @@ import com.company.accountbook.service.ReportService;
 import java.util.Scanner;
 
 public class CheckMenu {
-    ReportService reportService = new ReportService(new ReportDAO(new AccountBook("")));
+    ReportService reportService = new ReportService();
     Scanner sc = new Scanner(System.in);
     private String number;
 

@@ -1,5 +1,6 @@
 package com.company.accountbook.util;
 
+import com.company.accountbook.dto.Report;
 import com.company.accountbook.service.AccountBookService;
 
 import java.util.Scanner;
@@ -38,7 +39,8 @@ public class AccountBookMenu {
         if (number.equals("1")) {
             System.out.println("가계부 리스트: " + accountBookService.getAccountBooks());
             System.out.print("선택할 가계부 이름을 입력하세요: ");
-            sc.nextLine();
+            Report.setAccountBookName(sc.nextLine());
+            System.out.println(Report.getAccountBookName());
         } else {
             System.out.print("가계부 이름: ");
             String bookName = sc.nextLine();

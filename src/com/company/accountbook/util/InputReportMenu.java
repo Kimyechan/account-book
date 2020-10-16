@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputReportMenu {
-    ReportService reportService = new ReportService(new ReportDAO(new AccountBook("")));
+    ReportService reportService = new ReportService();
     Scanner sc = new Scanner(System.in);
     private String number;
 

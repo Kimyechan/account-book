@@ -13,10 +13,6 @@ import java.util.List;
 public class ReportService {
     ReportDAO reportDAO;
 
-    public ReportService(ReportDAO reportDAO) {
-        this.reportDAO = reportDAO;
-    }
-
     public void addReport(boolean isIncome, String content, int price, String memo, LocalDate date){
         reportDAO.insertReport(isIncome, content, price, memo, date);
     }
