@@ -18,8 +18,9 @@ public class AccountBookService {
 
     public boolean checkExisting(String bookName) {
         AccountBook selectedBook = accountBookDAO.findByBookName(bookName);
+        String selectedBookName = selectedBook.getBookName();
 
-        if (selectedBook != null) {
+        if (selectedBookName != null) {
             return true;
         } else {
             return false;
