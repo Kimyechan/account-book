@@ -1,6 +1,8 @@
 package com.company.accountbook.util;
 
 import com.company.accountbook.service.ReportService;
+import com.company.accountbook.vo.ExpenseCategory;
+import com.company.accountbook.vo.PayCategory;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -12,6 +14,8 @@ public class InputReportMenu {
     private int year;
     private int month;
     private int day;
+    private String category;
+    private String paymentMethod;
 
 
     // 싱글톤
@@ -63,13 +67,54 @@ public class InputReportMenu {
             System.out.println(e.getMessage());
             inputIncomeReport();
         }
+        System.out.println("카테고리를 선택하세요.");
+        System.out.println("1. " + ExpenseCategory.CLOTH.toString());
+        System.out.println("2. " + ExpenseCategory.FOOD.toString());
+        System.out.println("3. " + ExpenseCategory.TAX.toString());
+        System.out.print(">> ");
+        number = sc.nextLine();
+
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
+            System.out.println("다시 입력하세요.");
+            System.out.print(">> ");
+            number = sc.nextLine();
+            System.out.println();
+        }
+
+        if (number.equals("1")) {
+            category = ExpenseCategory.CLOTH.name();
+        } else if (number.equals("2")) {
+            category = ExpenseCategory.FOOD.name();
+        } else{
+            category = ExpenseCategory.TAX.name();
+        }
+
         System.out.print("지출 내역: ");
         String content = sc.nextLine();
         System.out.print("금액: ");
         int price = Integer.parseInt(sc.nextLine());
-        System.out.print("메모: ");
-        String memo = sc.nextLine();
-//        reportService.addReport(false, content, price, memo, LocalDate.of(year, month, day));
+        System.out.println("지불 수단을 선택하세요.");
+        System.out.println("1. " + PayCategory.CARD.name());
+        System.out.println("2. " + PayCategory.MONEY.name());
+        System.out.println("3. " + PayCategory.GIFT_CARD.name());
+        System.out.print(">> ");
+        number = sc.nextLine();
+
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
+            System.out.println("다시 입력하세요.");
+            System.out.print(">> ");
+            number = sc.nextLine();
+            System.out.println();
+        }
+
+        if (number.equals("1")) {
+            paymentMethod = PayCategory.CARD.name();
+        } else if (number.equals("2")) {
+            paymentMethod = PayCategory.MONEY.name();
+        } else{
+            paymentMethod = PayCategory.GIFT_CARD.name();
+        }
+        reportService.addReport(false, paymentMethod, category, price, content, LocalDate.of(year, month, day));
     }
 
     public void inputIncomeReport() {
@@ -84,12 +129,12 @@ public class InputReportMenu {
             System.out.println(e.getMessage());
             inputExpenseReport();
         }
+        System.out.print("카테고리: ");
+        String category = sc.nextLine();
         System.out.print("수입 내역: ");
         String content = sc.nextLine();
         System.out.print("금액: ");
         int price = Integer.parseInt(sc.nextLine());
-        System.out.print("메모: ");
-        String memo = sc.nextLine();
-//        reportService.addReport(true, content, price, memo, LocalDate.of(year, month, day));
+        reportService.addReport(true, null, category, price, content, LocalDate.of(year, month, day));
     }
 }
