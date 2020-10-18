@@ -7,9 +7,6 @@ import java.util.Scanner;
 public class StatisticsMenu {
     Scanner sc = new Scanner(System.in);
     InputDateMenu inputDateMenu = InputDateMenu.getInstance();
-    private int year;
-    private int month;
-    private int day;
 
     ReportService reportService = new ReportService();
 
@@ -43,18 +40,18 @@ public class StatisticsMenu {
             System.out.println();
         }
 
-        if (number.equals("1")) {
+        if (number.equals("1")) { // 일별 통계
             inputDateMenu.inputYearMonthDay();
             reportService.showStatistics(reportService.getDayReports(inputDateMenu.year, inputDateMenu.month, inputDateMenu.day));
             System.out.println();
-        } else if (number.equals("2")) {
+        } else if (number.equals("2")) { // 주별 통계
             System.out.println("서비스 예정입니다.");
             System.out.println();
-        } else if (number.equals("3")) {
+        } else if (number.equals("3")) { // 월별 통계
             inputDateMenu.inputYearMonth();
             reportService.showStatistics(reportService.getMonthReports(inputDateMenu.year, inputDateMenu.month));
             System.out.println();
-        } else if (number.equals("4")) {
+        } else if (number.equals("4")) { // 연도별 통계
             inputDateMenu.inputYear();
             reportService.showStatistics(reportService.getYearReports(inputDateMenu.year));
             System.out.println();
@@ -62,9 +59,7 @@ public class StatisticsMenu {
             MainMenu.getInstance().mainMenuPrint();
             System.out.println();
         }
-
         StatisticsMenu.getInstance().statisticsMenuPrint();
         System.out.println();
-
     }
 }

@@ -173,12 +173,20 @@ public class ReportService {
     public void showStatistics(List<Report> reportList) {
         HashMap<String, Integer> expense = new HashMap<>();
         HashMap<String, Integer> income = new HashMap<>();
+        expenseStatistics = 0;
+        incomeStatistics = 0;
         while (!reportList.isEmpty()) {
             Report report = reportList.remove(0);
             if (report.isIncome()) {
+                // 카테고리 별 수입 분류
                 income.put(report.getCategory(), income.getOrDefault(report.getCategory(), 0) + report.getPrice());
+                // 총 수입 금액
+                incomeStatistics += report.getPrice();
             } else {
+                // 카테고리 별 지출 분류
                 expense.put(report.getCategory(), expense.getOrDefault(report.getCategory(), 0) + report.getPrice());
+                // 총 지출 금액
+                expenseStatistics += report.getPrice();
             }
         }
         System.out.println();
@@ -188,9 +196,6 @@ public class ReportService {
         if (expense.isEmpty()) {
             System.out.println("- 내역 없음");
         } else {
-            for (Map.Entry<String, Integer> entry : expense.entrySet()) {
-                expenseStatistics += entry.getValue();
-            }
             for (Map.Entry<String, Integer> entry : expense.entrySet()) {
                 System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " (" + ((float) entry.getValue() * 100 / (float) expenseStatistics) + " %)");
             }
@@ -204,15 +209,11 @@ public class ReportService {
             System.out.println("- 내역 없음");
         } else {
             for (Map.Entry<String, Integer> entry : income.entrySet()) {
-                incomeStatistics += entry.getValue();
-            }
-            for (Map.Entry<String, Integer> entry : income.entrySet()) {
                 System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " (" + ((float) entry.getValue() * 100 / (float) incomeStatistics) + " %)");
             }
         }
         System.out.println();
         System.out.println("총 지출 금액: " + expenseStatistics);
         System.out.println("총 수입 금액: " + incomeStatistics);
-
     }
 }

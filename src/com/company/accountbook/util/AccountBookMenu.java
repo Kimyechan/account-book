@@ -68,5 +68,6 @@ public class AccountBookMenu {
             System.out.println();
             accountBookMenu();
         }
+        MainMenu.getInstance().mainMenuPrint();
     }
 }

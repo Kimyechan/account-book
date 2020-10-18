@@ -22,11 +22,12 @@ public class MainMenu {
         System.out.println("1. 조회");
         System.out.println("2. 가계부 입력");
         System.out.println("3. 통계");
+        System.out.println("4. 로그아웃");
         System.out.print(">> ");
         String number = sc.nextLine();
         System.out.println();
 
-        while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4")) {
             System.out.println("다시 입력하세요.");
             number = sc.nextLine();
             System.out.println();
@@ -35,8 +36,10 @@ public class MainMenu {
             CheckMenu.getInstance().checkMenuPrint();
         } else if (number.equals("2")) {
             InputReportMenu.getInstance().inputReportMenuPrint();
-        } else {
+        } else if (number.equals("3")) {
             StatisticsMenu.getInstance().statisticsMenuPrint();
+        } else {
+            AccountBookMenu.getInstance().accountBookMenu();
         }
     }
 }
