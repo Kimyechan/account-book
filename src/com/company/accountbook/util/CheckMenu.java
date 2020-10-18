@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class CheckMenu {
     ReportService reportService = new ReportService();
     Scanner sc = new Scanner(System.in);
-    private String number;
     private int year;
     private int month;
     private int day;
@@ -33,7 +32,7 @@ public class CheckMenu {
         System.out.println("4. 연도별 조회");
         System.out.println("0. 나가기");
         System.out.print(">> ");
-        number = sc.nextLine();
+        String number = sc.nextLine();
         System.out.println();
 
         while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4") && !number.equals("0")) {

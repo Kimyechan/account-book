@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class MainMenu {
     Scanner sc = new Scanner(System.in);
-    private String number;
 
     // 싱글톤
     private static MainMenu instance;
@@ -24,7 +23,7 @@ public class MainMenu {
         System.out.println("2. 가계부 입력");
         System.out.println("3. 통계");
         System.out.print(">> ");
-        number = sc.nextLine();
+        String number = sc.nextLine();
         System.out.println();
 
         while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
@@ -37,7 +36,7 @@ public class MainMenu {
         } else if (number.equals("2")) {
             InputReportMenu.getInstance().inputReportMenuPrint();
         } else {
-            StaticsMenu.getInstance().staticMenuPrint();
+            StatisticsMenu.getInstance().statisticsMenuPrint();
         }
     }
 }
