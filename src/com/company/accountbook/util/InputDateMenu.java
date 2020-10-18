@@ -50,7 +50,7 @@ public class InputDateMenu {
     }
 
     public void inputYear() {
-        System.out.println("조회를 원하는 날을 입력하세요. ex) 2020-10-15");
+        System.out.println("조회를 원하는 연도를 입력하세요. ex) 2020-10-15");
         System.out.print(">> ");
         try {
             String[] date = sc.nextLine().split("-");
