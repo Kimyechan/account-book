@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountBookDAO {
+    public AccountBookDAO() {
+        DBConnection.setDBServer();
+    }
 
     public void insertAccountBook(String username, String password){
         Connection con = DBConnection.getConnection();

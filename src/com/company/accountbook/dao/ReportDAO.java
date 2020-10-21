@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDAO {
+    public ReportDAO() {
+        DBConnection.setDBServer();
+    }
 
     public void addReportList(ResultSet rs, List<Report> reports) throws SQLException {
         while(rs.next()) {

@@ -1,15 +1,31 @@
 package com.company.accountbook.dao;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static final String server = "localhost"; // MySQL 서버 주소
-    private static final String database = "accountbook"; // MySQL DATABASE 이름
-    private static final String user_name = "root"; //  MySQL 서버 아이디
-    private static final String password = "12341234"; // MySQL 서버 비밀번호
+    private static String server; // MySQL 서버 주소
+    private static String database;  // MySQL DATABASE 이름
+    private static String user_name;  //  MySQL 서버 아이디
+    private static String password; // MySQL 서버 비밀번호
 
+    public static void setDBServer() {
+        try {
+            FileReader fileReader = new FileReader("DBServerInfo");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            server = bufferedReader.readLine();
+            database = bufferedReader.readLine();
+            user_name = bufferedReader.readLine();
+            password = bufferedReader.readLine();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static Connection getConnection() {
         Connection con = null;
 
