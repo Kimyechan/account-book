@@ -1,5 +1,5 @@
 package com.company.accountbook.vo;
 
-public enum ExpenseCategory {
+public enum ExpenseCategory{
     FOOD, CLOTH, TAX
 }
