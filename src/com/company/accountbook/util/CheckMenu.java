@@ -3,6 +3,8 @@ package com.company.accountbook.util;
 import com.company.accountbook.dto.Report;
 import com.company.accountbook.service.ReportService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CheckMenu {
@@ -72,10 +74,20 @@ public class CheckMenu {
         if (reportService.getDayReports(year, month, day).isEmpty()) {
             System.out.println("내역 없음");
         } else {
+            List<Report> reportList = reportService.getDayReports(year, month, day);
+            List<Report> expense = new ArrayList<>();
+            List<Report> income = new ArrayList<>();
+            for (Report report : reportList) {
+                if (report.isIncome()) {
+                    income.add(report);
+                } else {
+                    expense.add(report);
+                }
+            }
             System.out.println("지출 내역");
-            reportService.getDayReports(year, month, day).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
+            expense.forEach(System.out::println);
             System.out.println("수입 내역");
-            reportService.getDayReports(year, month, day).stream().filter(Report::isIncome).forEach(System.out::println);
+            income.forEach(System.out::println);
         }
     }
 

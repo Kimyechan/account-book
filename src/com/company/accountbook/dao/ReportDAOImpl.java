@@ -233,12 +233,11 @@ public class ReportDAOImpl implements ReportDAO{
             con.setAutoCommit(false);
             ps.setInt(1, reportId);
 
-            rs = ps.executeQuery();
+            ps.executeUpdate();
 
             con.commit();
             con.close();
             ps.close();
-            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             try {

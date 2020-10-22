@@ -13,22 +13,38 @@ public class ReportServiceTest {
     public static void addData() {
         ReportService reportService = new ReportService();
 
+        reportService.setBookNameForReportList("yc");
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 10000, "gukbab lunch", LocalDate.of(2020, 10, 16));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 10000, "lunch", LocalDate.of(2020, 10, 16));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.TAX.toString(), 8000, "lunch", LocalDate.of(2020, 10, 17));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 10, 17));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 11, 18));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 8000, "lunch", LocalDate.of(2020, 11, 18));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.TAX.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 100000000, "11 month salary", LocalDate.of(2021, 10, 1));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 30000000, "11 month bonus", LocalDate.of(2021, 10, 1));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 100000000, "11 month salary", LocalDate.of(2021, 11, 1));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.POCKET_MONEY.toString(), 30000000, "11 month bonus", LocalDate.of(2021, 11, 1));
+
+        reportService.setBookNameForReportList("jb");
         reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 10000, "gukbab lunch", LocalDate.of(2020, 10, 16));
         reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 10000, "lunch", LocalDate.of(2020, 10, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 10, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 10, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 11, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 11, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
-        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 8000, "lunch", LocalDate.of(2020, 10, 17));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 10, 17));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.FOOD.toString(), 8000, "lunch", LocalDate.of(2020, 11, 18));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 8000, "lunch", LocalDate.of(2020, 11, 18));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.CLOTH.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
+        reportService.addReport(false, PayCategory.CARD.toString(), ExpenseCategory.TAX.toString(), 8000, "lunch", LocalDate.of(2021, 11, 16));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 100000000, "11 month salary", LocalDate.of(2021, 10, 1));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 30000000, "11 month bonus", LocalDate.of(2021, 10, 1));
         reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 100000000, "11 month salary", LocalDate.of(2021, 11, 1));
-        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.SALARY.toString(), 30000000, "11 month bonus", LocalDate.of(2021, 11, 1));
+        reportService.addReport(true,  PayCategory.CARD.toString(), IncomeCategory.POCKET_MONEY.toString(), 30000000, "11 month bonus", LocalDate.of(2021, 11, 1));
     }
 
     public static void main(String[] args) {
         ReportService reportService = new ReportService();
 
-        reportService.setBookNameForReportList("yechan");
         ReportServiceTest.addData();
 
         List<Report> reports = reportService.getDayReports(2020, 10, 16);

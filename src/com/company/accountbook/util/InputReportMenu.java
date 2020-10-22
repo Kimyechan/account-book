@@ -13,12 +13,8 @@ public class InputReportMenu {
     InputDateMenu inputDateMenu = InputDateMenu.getInstance();
     Scanner sc = new Scanner(System.in);
     private String number;
-    private int year;
-    private int month;
-    private int day;
     private String category;
     private String content;
-    private String paymentMethod;
 
 
     // 싱글톤
@@ -63,9 +59,6 @@ public class InputReportMenu {
     public void inputExpenseReport() {
         inputDateMenu.inputReportDate();
         System.out.println("카테고리를 선택하세요.");
-//        for(ExpenseCategory ex : ExpenseCategory.values()) {
-//            System.out.println(ex.getNum() + ex.name());
-//        }
         System.out.println("1. " + ExpenseCategory.CLOTH.toString());
         System.out.println("2. " + ExpenseCategory.FOOD.toString());
         System.out.println("3. " + ExpenseCategory.TAX.toString());
@@ -105,6 +98,7 @@ public class InputReportMenu {
             System.out.println();
         }
 
+        String paymentMethod;
         if (number.equals("1")) {
             paymentMethod = PayCategory.CARD.name();
         } else if (number.equals("2")) {

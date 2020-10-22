@@ -77,7 +77,7 @@ public class Calendar {
 
     public void printCalendar(int year, int month, List<Report> reportList) {
 
-        System.out.printf("                   [%d년 %d월]\n", year, month);
+        System.out.printf("                 [ %d년 %d월 ]\n", year, month);
         System.out.printf("%7s%7s%7s%7s%7s%7s%7s\n", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
         System.out.println("--------------------------------------------------");
         int day = 1;
