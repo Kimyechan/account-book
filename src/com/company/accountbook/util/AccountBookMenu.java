@@ -94,7 +94,7 @@ public class AccountBookMenu {
             System.out.println();
 
             while (!number.equals("1") && !number.equals("2")) {
-                System.out.println("다시 입력하세요.");
+                System.out.print("다시 입력하세요: ");
                 number = sc.nextLine();
                 System.out.println();
             }
@@ -106,8 +106,8 @@ public class AccountBookMenu {
                 while (accountBookService.checkExisting(accountBookName)) {
                     System.out.println("이미 존재하는 가계부 이름입니다.");
                     System.out.print("다시 입력하세요: ");
-                    System.out.println();
                     accountBookName = sc.nextLine();
+                    System.out.println();
                 }
                 System.out.print("한번 더 입력하세요: ");
                 String accountBookName2 = sc.nextLine();
