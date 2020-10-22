@@ -12,43 +12,193 @@ enum IncomeCategory {
     ETC
 }
 
+enum PayCategory {
+    CARD
+    MONEY
+    GIFT_CARD
+}
+
 class AccountBook {
-    private Integer id;
-    private String userName;
-    List<Report> reportList;
-}
-
-interface Checkable {
-    - AccountBook accountBook;
-    List<Report> checkAccount()
-    void showStatics()
-    default void printAccount()
-}
-
-class DayCheckAccount implements Checkable {
-}
-
-class WeekCheckAccount implements Checkable {
-}
-
-class MonthCheckAccount implements Checkable {
-}
-
-class YearCheckAccount implements Checkable {
+    - int bookId;
+    - String userName;
+    - List<Report> reportList;
+    + String toString();
 }
 
 class Report {
-    int price;
-    String content;
-    String memo;
+    - static String accountBookName;
+    - int reportId;
+    - boolean isIncome;
+    - String paymentMethod;
+    - String category;
+    - int price;
+    - String content;
+    - int year;
+    - int month;
+    - int day;
+    + String toString();
 }
 
-
-class Income extends Report{
-    List<IncomeCategory> categories;
+interface AccountBookDAO {
+    void insertAccountBook(String username, String password);
+    List<AccountBook> findAll();
+    AccountBook findByBookName(String bookName);
+    void update(String bookName, String changedBookName, String changedPass);
+    void delete(String bookName);
 }
 
-class Expense extends Report{
-    List<ExpenseCategory> categories;
+class AccountBookDAOImpl implements AccountBookDAO {
 }
+
+class AccountBookService {
+    AccountBookDAOImpl accountBookDAOImpl
+    ReportDAOImpl reportDAOImpl
+
+    + void addAccountBook(String bookName, String pass)
+    + List<AccountBook> getAccountBooks()
+    + boolean checkExisting(String bookName)
+    + boolean checkAccessRight(String bookName, String password)
+    + void updateAccountBook(String bookName, String changedBookName, String changedPass)
+    + void deleteAccountBook(String bookName)
+}
+
+AccountBookService *-- AccountBookDAOImpl
+AccountBookService *-- ReportDAOImpl
+
+interface ReportDAO {
+    void insertReport(boolean isIncome, String paymentMethod, String category, int price, String memo, LocalDate date);
+    List<Report> findDayReport(int year, int month, int day);
+    List<Report> findWeekReport(LocalDate startDate, LocalDate endDate);
+    List<Report> findMonthReport(int year, int month);
+    List<Report> findYearReport(int year);
+    List<Report> findIsComeReport(boolean isInCome);
+    List<Report> findIncomeCategoryReports(String content);
+    List<Report> findExpenseCategoryReports(String content);
+    List<Report> findReportByIsInComeAndCategory(boolean isIncome, String content);
+    List<Report> findAllReport(String accountBookName);
+    void delete(Integer reportId);
+    void deleteBookCascade(String bookName);
+    void updateBookCascade(String changedBookName, String bookName);
+}
+
+class ReportDAOImpl implements ReportDAO{
+}
+
+class ReportService {
+    ReportDAOImpl reportDAOImpl
+
+    - void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date)
+    + List<Report> getDayReports(int year, int month, int day)
+    + List<Report> getMonthReports(int year, int month)
+    + List<Report> getYearReports(int year)
+    + List<Report> getIsComeReports(boolean isIncome)
+    + List<Report> getIncomeCategoryReports(IncomeCategory category)
+    + List<Report> getExpenseCategoryReports(ExpenseCategory category)
+    + void setBookNameForReportList(String bookName)
+    + Map<String, Integer> getDayExpenseStatics(int year, int month, int day)
+    + Map<String, Integer> getMonthExpenseStatics(int year, int month)
+    + Map<String, Integer> getYearExpenseStatics(int year)
+    - Map<String, Integer> getStatistics(List<Report> reports)
+    + Integer getCategoryPrice(List<Report> reports, ExpenseCategory category)
+    + public Map<String, Integer> getDayIncomeStatics(int year, int month, int day)
+    + Map<String, Integer> getMonthIncomeStatics(int year, int month)
+    + Map<String, Integer> getYearIncomeStatics(int year)
+    + Integer getCategoryPrice(List<Report> reports, IncomeCategory category)
+    + Integer getExpenseAllStatics()
+    + Integer getIncomeAllStatics()
+    + Map<String, Integer> calculateCurrentAllMoney()
+    + Map<String, Integer> calculateCurrentMonthMoney(int year, int month)
+    + Map<String, Integer> calculateCurrentYearMoney(int year)
+    + Map<String, Integer> getCurrentMoneyStream(List<Report> reports)
+    + void deleteReport(Integer reportId)
+}
+
+ReportService *-- ReportDAOImpl
+
+class AccountBookMenu {
+    AccountBookService accountBookService
+    ReportService reportService
+    String accountBookName
+    String password
+    static AccountBookMenu instance
+    static AccountBookMenu getInstance()
+    void accountBookMenu()
+}
+
+class CheckMenu {
+    ReportService reportService
+    Scanner sc
+    - int year;
+    - int month;
+    - int day;
+    - static CheckMenu instance;
+    - static CheckMenu getInstance()
+    + void checkMenuPrint()
+    + void dayCheckReport()
+    + void weekCheckReport()
+    + void monthCheckReport()
+    + void yearCheckReport()
+}
+
+class InputDateMenu {
+    Scanner sc
+    * int year;
+    * int month;
+    * int day;
+    - static InputDateMenu instance;
+    - InputDateMenu()
+    + static InputDateMenu getInstance()
+    + void inputYearMonthDay()
+    + void inputYearMonth()
+    + void inputYear()
+    + void inputReportDate(
+}
+
+class InputReportMenu {
+    ReportService reportService
+    InputDateMenu inputDateMenu
+    Scanner sc
+    - String number;
+    - String category;
+    - String content;
+    - String paymentMethod;
+
+    - static InputReportMenu instance
+    - InputReportMenu()
+    + static InputReportMenu getInstance()
+    + void inputReportMenuPrint()
+    + void inputExpenseReport()
+    + void inputIncomeReport()
+}
+
+class MainMenu {
+    Scanner sc
+    - static MainMenu instance
+
+    + static MainMenu getInstance()
+    + void mainMenuPrint()
+}
+
+class StatisticsMenu {
+    Scanner sc
+    - int totalMoney
+    Map<String, Integer> expense
+    Map<String, Integer> income
+    InputDateMenu inputDateMenu
+
+    ReportService reportService
+
+    - static StatisticsMenu instance;
+
+    + static StatisticsMenu getInstance()
+    + void statisticsMenuPrint()
+    + void printStatistics(boolean isIncome,Map<String, Integer> reportList)
+}
+AccountBookMenu *-- AccountBookService
+AccountBookMenu *-- ReportService
+CheckMenu *-- ReportService
+InputReportMenu *- ReportService
+InputReportMenu o-- InputDateMenu
+StatisticsMenu *-- ReportService
+StatisticsMenu o-- InputDateMenu
 @enduml

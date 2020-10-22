@@ -100,7 +100,7 @@ public class CheckMenu {
         System.out.println("조회를 원하는 연도를 입력하세요. ex) 2020");
         System.out.print(">> ");
         try {
-            year = sc.nextInt();
+            year = Integer.parseInt(sc.nextLine());
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("형식에 맞게 입력하세요.");
             yearCheckReport();
