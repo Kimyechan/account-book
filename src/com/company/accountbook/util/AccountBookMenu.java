@@ -103,6 +103,12 @@ public class AccountBookMenu {
                 System.out.print("새로운 가계부 이름을 입력하세요: ");
                 accountBookName = sc.nextLine();
                 System.out.println();
+                while (accountBookService.checkExisting(accountBookName)) {
+                    System.out.println("이미 존재하는 가계부 이름입니다.");
+                    System.out.print("다시 입력하세요: ");
+                    System.out.println();
+                    accountBookName = sc.nextLine();
+                }
                 System.out.print("한번 더 입력하세요: ");
                 String accountBookName2 = sc.nextLine();
                 while (!accountBookName.equals(accountBookName2)) {
