@@ -1,5 +1,6 @@
 package com.company.accountbook.util;
 
+import com.company.accountbook.dto.Report;
 import com.company.accountbook.service.ReportService;
 
 import java.util.Scanner;
@@ -71,7 +72,10 @@ public class CheckMenu {
         if (reportService.getDayReports(year, month, day).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            reportService.getDayReports(year, month, day).forEach(System.out::println);
+            System.out.println("지출 내역");
+            reportService.getDayReports(year, month, day).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
+            System.out.println("수입 내역");
+            reportService.getDayReports(year, month, day).stream().filter(Report::isIncome).forEach(System.out::println);
         }
     }
 
@@ -92,7 +96,10 @@ public class CheckMenu {
         if (reportService.getMonthReports(year, month).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            reportService.getMonthReports(year, month).forEach(System.out::println);
+            System.out.println("지출 내역");
+            reportService.getMonthReports(year, month).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
+            System.out.println("수입 내역");
+            reportService.getMonthReports(year, month).stream().filter(report -> report.isIncome()).forEach(System.out::println);
         }
     }
 
@@ -108,7 +115,10 @@ public class CheckMenu {
         if (reportService.getYearReports(year).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            reportService.getYearReports(year).forEach(System.out::println);
+            System.out.println("지출 내역");
+            reportService.getYearReports(year).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
+            System.out.println("수입 내역");
+            reportService.getYearReports(year).stream().filter(report -> report.isIncome()).forEach(System.out::println);
         }
     }
 }

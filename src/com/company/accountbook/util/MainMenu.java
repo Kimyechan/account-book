@@ -25,14 +25,15 @@ public class MainMenu {
     public void mainMenuPrint() {
         Calendar.getInstance().printCalendar(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), reportService.getMonthReports(LocalDate.now().getYear(), LocalDate.now().getMonthValue()));
         System.out.println("1. 조회");
-        System.out.println("2. 가계부 입력");
-        System.out.println("3. 통계");
-        System.out.println("4. 로그아웃");
+        System.out.println("2. 가계부 내역 추가");
+        System.out.println("3. 가계부 내역 삭제");
+        System.out.println("4. 통계");
+        System.out.println("0. 로그아웃");
         System.out.print(">> ");
         String number = sc.nextLine();
         System.out.println();
 
-        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4")) {
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4") && !number.equals("0")) {
             System.out.println("다시 입력하세요.");
             number = sc.nextLine();
             System.out.println();
@@ -41,7 +42,9 @@ public class MainMenu {
             CheckMenu.getInstance().checkMenuPrint();
         } else if (number.equals("2")) {
             InputReportMenu.getInstance().inputReportMenuPrint();
-        } else if (number.equals("3")) {
+        } else if(number.equals("3")){
+            DeleteReportMenu.getInstance().showMonthReport();
+        } else if (number.equals("4")) {
             StatisticsMenu.getInstance().statisticsMenuPrint();
         } else {
             AccountBookMenu.getInstance().accountBookMenu();

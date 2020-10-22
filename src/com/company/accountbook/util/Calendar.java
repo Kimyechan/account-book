@@ -144,14 +144,4 @@ public class Calendar {
         System.out.println("--------------------------------------------------");
         System.out.println();
     }
-
-//    public static void main(String[] args) {
-    // test
-//        System.out.println(new Calendar().whatDayOfWeek(2020, 2, 29)); // 토
-//        System.out.println(new Calendar().whatDayOfWeek(2020, 10, 22)); // 목
-//        System.out.println(new Calendar().whatDayOfWeek(1993, 5, 1)); // 토
-//        new Calendar().printCalendar(2020, 10);
-//        System.out.println();
-//        new Calendar().printCalendar(2020, 11);
-//    }
 }

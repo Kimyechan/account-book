@@ -73,6 +73,7 @@ public class AccountBookMenu {
             System.out.println("가계부 리스트: " + accountBookService.getAccountBooks());
             System.out.print("수정할 가계부 이름을 입력하세요: ");
             accountBookName = sc.nextLine();
+            String originAccountBook = accountBookName;
             while (!accountBookService.checkExisting(accountBookName)) {
                 System.out.print("다시 입력하세요: ");
                 accountBookName = sc.nextLine();
@@ -124,7 +125,7 @@ public class AccountBookMenu {
                 }
                 System.out.println();
                 System.out.println("*** 가계부 이름 변경이 완료되었습니다 ***");
-                accountBookService.updateAccountBook(accountBookName, accountBookName, password);
+                accountBookService.updateAccountBook(originAccountBook, accountBookName2, password);
                 System.out.println();
             } else {
                 System.out.print("변경할 비밀번호를 입력하세요: ");
