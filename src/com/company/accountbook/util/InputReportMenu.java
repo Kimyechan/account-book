@@ -63,6 +63,9 @@ public class InputReportMenu {
     public void inputExpenseReport() {
         inputDateMenu.inputReportDate();
         System.out.println("카테고리를 선택하세요.");
+//        for(ExpenseCategory ex : ExpenseCategory.values()) {
+//            System.out.println(ex.getNum() + ex.name());
+//        }
         System.out.println("1. " + ExpenseCategory.CLOTH.toString());
         System.out.println("2. " + ExpenseCategory.FOOD.toString());
         System.out.println("3. " + ExpenseCategory.TAX.toString());
