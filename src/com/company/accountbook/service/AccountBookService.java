@@ -1,45 +1,45 @@
 package com.company.accountbook.service;
 
-import com.company.accountbook.dao.AccountBookDAO;
-import com.company.accountbook.dao.ReportDAO;
+import com.company.accountbook.dao.AccountBookDAOImpl;
+import com.company.accountbook.dao.ReportDAOImpl;
 import com.company.accountbook.dto.AccountBook;
 
 import java.util.List;
 
 public class AccountBookService {
-    AccountBookDAO accountBookDAO = new AccountBookDAO();
-    ReportDAO reportDAO = new ReportDAO();
+    AccountBookDAOImpl accountBookDAOImpl = new AccountBookDAOImpl();
+    ReportDAOImpl reportDAOImpl = new ReportDAOImpl();
 
     public void addAccountBook(String bookName, String pass) {
-        accountBookDAO.insertAccountBook(bookName, pass);
+        accountBookDAOImpl.insertAccountBook(bookName, pass);
     }
 
     public List<AccountBook> getAccountBooks() {
-        return accountBookDAO.findAll();
+        return accountBookDAOImpl.findAll();
     }
 
     public boolean checkExisting(String bookName) {
-        AccountBook selectedBook = accountBookDAO.findByBookName(bookName);
+        AccountBook selectedBook = accountBookDAOImpl.findByBookName(bookName);
         String selectedBookName = selectedBook.getBookName();
 
         return selectedBookName != null;
     }
 
     public boolean checkAccessRight(String bookName, String password) {
-        AccountBook selectedBook = accountBookDAO.findByBookName(bookName);
+        AccountBook selectedBook = accountBookDAOImpl.findByBookName(bookName);
         String rightPass = selectedBook.getPassword();
 
         return password.equals(rightPass);
     }
 
     public void updateAccountBook(String bookName, String changedBookName, String changedPass) {
-        accountBookDAO.update(bookName, changedBookName, changedPass);
-        reportDAO.updateBookCascade(changedBookName, bookName);
+        accountBookDAOImpl.update(bookName, changedBookName, changedPass);
+        reportDAOImpl.updateBookCascade(changedBookName, bookName);
     }
 
     public void deleteAccountBook(String bookName) {
-        accountBookDAO.delete(bookName);
-        reportDAO.deleteBookCascade(bookName);
+        accountBookDAOImpl.delete(bookName);
+        reportDAOImpl.deleteBookCascade(bookName);
     }
 
 }

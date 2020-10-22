@@ -1,6 +1,6 @@
 package com.company.accountbook.service;
 
-import com.company.accountbook.dao.ReportDAO;
+import com.company.accountbook.dao.ReportDAOImpl;
 import com.company.accountbook.dto.Report;
 import com.company.accountbook.vo.ExpenseCategory;
 import com.company.accountbook.vo.IncomeCategory;
@@ -9,37 +9,36 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class ReportService {
-    ReportDAO reportDAO = new ReportDAO();
-    Scanner sc = new Scanner(System.in);
+    ReportDAOImpl reportDAOImpl = new ReportDAOImpl();
 
     public void addReport(boolean isIncome, String paymentMethod, String category, int price, String content, LocalDate date) {
-        reportDAO.insertReport(isIncome, paymentMethod, category, price, content, date);
+        reportDAOImpl.insertReport(isIncome, paymentMethod, category, price, content, date);
     }
 
     public List<Report> getDayReports(int year, int month, int day) {
-        return reportDAO.findDayReport(year, month, day);
+        return reportDAOImpl.findDayReport(year, month, day);
     }
 
     public List<Report> getMonthReports(int year, int month) {
-        return reportDAO.findMonthReport(year, month);
+        return reportDAOImpl.findMonthReport(year, month);
     }
 
     public List<Report> getYearReports(int year) {
-        return reportDAO.findYearReport(year);
+        return reportDAOImpl.findYearReport(year);
     }
 
     public List<Report> getIsComeReports(boolean isIncome) {
-        return reportDAO.findIsComeReport(isIncome);
+        return reportDAOImpl.findIsComeReport(isIncome);
     }
 
     public List<Report> getIncomeCategoryReports(IncomeCategory category) {
         String content = category.toString();
-        return reportDAO.findIncomeCategoryReports(content);
+        return reportDAOImpl.findIncomeCategoryReports(content);
     }
 
     public List<Report> getExpenseCategoryReports(ExpenseCategory category) {
         String content = category.toString();
-        return reportDAO.findExpenseCategoryReports(content);
+        return reportDAOImpl.findExpenseCategoryReports(content);
     }
 
     public void setBookNameForReportList(String bookName) {
@@ -116,19 +115,19 @@ public class ReportService {
     }
 
     public Map<String, Integer> calculateCurrentAllMoney() {
-        List<Report> reports = reportDAO.findAllReport(Report.getAccountBookName());
+        List<Report> reports = reportDAOImpl.findAllReport(Report.getAccountBookName());
 
         return getCurrentMoneyStream(reports);
     }
 
     public Map<String, Integer> calculateCurrentMonthMoney(int year, int month) {
-        List<Report> reports = reportDAO.findMonthReport(year, month);
+        List<Report> reports = reportDAOImpl.findMonthReport(year, month);
 
         return getCurrentMoneyStream(reports);
     }
 
     public Map<String, Integer> calculateCurrentYearMoney(int year) {
-        List<Report> reports = reportDAO.findYearReport(year);
+        List<Report> reports = reportDAOImpl.findYearReport(year);
 
         return getCurrentMoneyStream(reports);
     }
@@ -143,5 +142,9 @@ public class ReportService {
         map.put("income", income);
 
         return map;
+    }
+
+    public void deleteReport(Integer reportId) {
+        reportDAOImpl.delete(reportId);
     }
 }
