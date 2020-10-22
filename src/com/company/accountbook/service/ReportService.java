@@ -48,17 +48,38 @@ public class ReportService {
 
     public Map<String, Integer> getDayExpenseStatics(int year, int month, int day) {
         List<Report> reports = getDayReports(year, month, day);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (!report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     public Map<String, Integer> getMonthExpenseStatics(int year, int month) {
         List<Report> reports = getMonthReports(year, month);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (!report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     public Map<String, Integer> getYearExpenseStatics(int year) {
         List<Report> reports = getYearReports(year);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (!report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     private Map<String, Integer> getStatistics(List<Report> reports) {
@@ -78,17 +99,38 @@ public class ReportService {
 
     public Map<String, Integer> getDayIncomeStatics(int year, int month, int day) {
         List<Report> reports = getDayReports(year, month, day);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     public Map<String, Integer> getMonthIncomeStatics(int year, int month) {
         List<Report> reports = getMonthReports(year, month);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     public Map<String, Integer> getYearIncomeStatics(int year) {
         List<Report> reports = getYearReports(year);
-        return getStatistics(reports);
+        List<Report> newReports = new ArrayList<>();
+
+        for (Report report : reports) {
+            if (report.isIncome()) {
+                newReports.add(report);
+            }
+        }
+        return getStatistics(newReports);
     }
 
     public Integer getCategoryPrice(List<Report> reports, IncomeCategory category) {

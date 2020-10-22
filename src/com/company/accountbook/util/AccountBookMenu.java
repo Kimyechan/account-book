@@ -171,6 +171,8 @@ public class AccountBookMenu {
             if(deleteCheck.equals("yes")) {
                 accountBookService.deleteAccountBook(accountBookName);
             }
+            System.out.println("*** 가계부 삭제가 완료되었습니다 ***");
+            System.out.println();
             accountBookMenu();
         }
         MainMenu.getInstance().mainMenuPrint();
