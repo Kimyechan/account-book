@@ -27,9 +27,11 @@ public class AccountBookDAO {
             con.commit();
         } catch(SQLException ex) {
             ex.printStackTrace();
-//            try(con.rollback()) {
-//
-//            }
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -84,5 +86,112 @@ public class AccountBookDAO {
         }
 
         return new AccountBook(selectedBookName, selectedBookPass);
+    }
+
+    public void update(String bookName, String changedBookName, String changedPass) {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+
+        String sql1 = "update account_book set book_name = ?, pass = ? where book_name = ?";
+
+        try {
+            ps = con.prepareStatement(sql1);
+            con.setAutoCommit(false);
+            ps.setString(1, changedBookName);
+            ps.setString(2, changedPass);
+            ps.setString(3, bookName);
+
+            ps.executeUpdate();
+
+            con.commit();
+            con.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        String sql2 = "update report set account_book_name = ? where account_book_name = ?";
+//
+//        try {
+//            ps = con.prepareStatement(sql2);
+//            con.setAutoCommit(false);
+//            ps.setString(1, changedBookName);
+//            ps.setString(2, bookName);
+//
+//            ps.executeUpdate();
+//
+//            con.commit();
+//            con.close();
+//            ps.close();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            try {
+//                con.rollback();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        try {
+//            con.setAutoCommit(true);
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+    }
+
+    public void delete(String bookName) {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+
+        String sql1 = "delete from account_book where book_name = ?";
+        try {
+            ps = con.prepareStatement(sql1);
+            con.setAutoCommit(false);
+            ps.setString(1, bookName);
+
+            ps.executeUpdate();
+
+            con.commit();
+            con.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        String sql2 = "delete from report where account_book_name = ?";
+//        try {
+//            ps = con.prepareStatement(sql2);
+//            ps.setString(1, bookName);
+//
+//            ps.executeUpdate();
+//
+//            con.commit();
+//            con.close();
+//            ps.close();
+//        } catch (SQLException ex1) {
+//            ex1.printStackTrace();
+//            try {
+//                con.rollback();
+//            } catch (SQLException ex2) {
+//                ex2.printStackTrace();
+//            }
+//        }
+//
+//        try {
+//            con.setAutoCommit(true);
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
     }
 }
