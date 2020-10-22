@@ -63,15 +63,9 @@ public class ReportService {
 
     private Map<String, Integer> getStatistics(List<Report> reports) {
         Map<String, Integer> statistics = new HashMap<>();
-
-        Integer priceOfFood = getCategoryPrice(reports, ExpenseCategory.FOOD);
-        Integer priceOfCloth = getCategoryPrice(reports, ExpenseCategory.CLOTH);
-        Integer priceOfTax = getCategoryPrice(reports, ExpenseCategory.TAX);
-
-        statistics.put("Food", priceOfFood);
-        statistics.put("Cloth", priceOfCloth);
-        statistics.put("Tax", priceOfTax);
-
+        for (Report report : reports) {
+            statistics.put(report.getCategory(), statistics.getOrDefault(report.getCategory(), 0) + report.getPrice());
+        }
         return statistics;
     }
 
@@ -84,40 +78,28 @@ public class ReportService {
 
     public Map<String, Integer> getDayIncomeStatics(int year, int month, int day) {
         List<Report> reports = getDayReports(year, month, day);
-        return calculateIncome(reports);
+        return getStatistics(reports);
     }
 
     public Map<String, Integer> getMonthIncomeStatics(int year, int month) {
         List<Report> reports = getMonthReports(year, month);
-        return calculateIncome(reports);
+        return getStatistics(reports);
     }
 
     public Map<String, Integer> getYearIncomeStatics(int year) {
         List<Report> reports = getYearReports(year);
-        return calculateIncome(reports);
-    }
-
-    private Map<String, Integer> calculateIncome(List<Report> reports) {
-        Map<String, Integer> statistics = new HashMap<>();
-
-        Integer priceOfSALARY = getCategoryPrice(reports, IncomeCategory.SALARY);
-        Integer priceOfPOCKET = getCategoryPrice(reports, IncomeCategory.POCKET_MONEY);
-        Integer priceOfFINANCIAL = getCategoryPrice(reports, IncomeCategory.FINANCIAL_MONEY);
-        Integer priceOfETC = getCategoryPrice(reports, IncomeCategory.ETC);
-
-        statistics.put("Salary", priceOfSALARY);
-        statistics.put("Pocket", priceOfPOCKET);
-        statistics.put("Financial", priceOfFINANCIAL);
-        statistics.put("ETC", priceOfETC);
-
-        return statistics;
+        return getStatistics(reports);
     }
 
     public Integer getCategoryPrice(List<Report> reports, IncomeCategory category) {
-        return reports.stream()
-                .filter(report -> report.getCategory().equals(category.toString()))
-                .map(Report::getPrice)
-                .reduce(0, Integer::sum);
+        if (reports.isEmpty()) {
+            return 0;
+        } else {
+            return reports.stream()
+                    .filter(report -> report.getCategory().equals(category.toString()))
+                    .map(Report::getPrice)
+                    .reduce(0, Integer::sum);
+        }
     }
 
 
@@ -162,51 +144,4 @@ public class ReportService {
 
         return map;
     }
-
-//    public void showStatistics(List<Report> reportList) {
-//        HashMap<String, Integer> expense = new HashMap<>();
-//        HashMap<String, Integer> income = new HashMap<>();
-//        expenseStatistics = 0;
-//        incomeStatistics = 0;
-//        while (!reportList.isEmpty()) {
-//            Report report = reportList.remove(0);
-//            if (report.isIncome()) {
-//                // 카테고리 별 수입 분류
-//                income.put(report.getCategory(), income.getOrDefault(report.getCategory(), 0) + report.getPrice());
-//                // 총 수입 금액
-//                incomeStatistics += report.getPrice();
-//            } else {
-//                // 카테고리 별 지출 분류
-//                expense.put(report.getCategory(), expense.getOrDefault(report.getCategory(), 0) + report.getPrice());
-//                // 총 지출 금액
-//                expenseStatistics += report.getPrice();
-//            }
-//        }
-//        System.out.println();
-//
-//        // 지출 출력
-//        System.out.println("지출");
-//        if (expense.isEmpty()) {
-//            System.out.println("- 내역 없음");
-//        } else {
-//            for (Map.Entry<String, Integer> entry : expense.entrySet()) {
-//                System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " (" + ((float) entry.getValue() * 100 / (float) expenseStatistics) + " %)");
-//            }
-//        }
-//
-//        System.out.println();
-//
-//        // 수입 출력
-//        System.out.println("수입");
-//        if (income.isEmpty()) {
-//            System.out.println("- 내역 없음");
-//        } else {
-//            for (Map.Entry<String, Integer> entry : income.entrySet()) {
-//                System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " (" + ((float) entry.getValue() * 100 / (float) incomeStatistics) + " %)");
-//            }
-//        }
-//        System.out.println();
-//        System.out.println("총 지출 금액: " + expenseStatistics);
-//        System.out.println("총 수입 금액: " + incomeStatistics);
-//    }
 }

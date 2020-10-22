@@ -50,7 +50,7 @@ public class InputDateMenu {
     }
 
     public void inputYear() {
-        System.out.println("조회를 원하는 연도를 입력하세요. ex) 2020-10-15");
+        System.out.println("조회를 원하는 연도를 입력하세요. ex) 2020");
         System.out.print(">> ");
         try {
             String[] date = sc.nextLine().split("-");
@@ -58,6 +58,21 @@ public class InputDateMenu {
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("형식에 맞게 입력하세요.");
             inputYear();
+        }
+    }
+
+    public void inputReportDate() {
+        try {
+            System.out.println("날짜를 입력하세요. ex) 1993-05-01");
+            System.out.print("날짜: ");
+            String[] date = sc.nextLine().split("-");
+            year = Integer.parseInt(date[0]);
+            month = Integer.parseInt(date[1]);
+            day = Integer.parseInt(date[2]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException e) {
+            System.out.println("형식에 맞게 다시 입력하세요.");
+            System.out.println(e.getMessage());
+            inputReportDate();
         }
     }
 }

@@ -10,12 +10,14 @@ import java.util.Scanner;
 
 public class InputReportMenu {
     ReportService reportService = new ReportService();
+    InputDateMenu inputDateMenu = InputDateMenu.getInstance();
     Scanner sc = new Scanner(System.in);
     private String number;
     private int year;
     private int month;
     private int day;
     private String category;
+    private String content;
     private String paymentMethod;
 
 
@@ -59,17 +61,7 @@ public class InputReportMenu {
     }
 
     public void inputExpenseReport() {
-        try {
-            System.out.print("날짜: ");
-            String[] date = sc.nextLine().split("-");
-            year = Integer.parseInt(date[0]);
-            month = Integer.parseInt(date[1]);
-            day = Integer.parseInt(date[2]);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException e) {
-            System.out.println("형식에 맞게 다시 입력하세요.");
-            System.out.println(e.getMessage());
-            inputIncomeReport();
-        }
+        inputDateMenu.inputReportDate();
         System.out.println("카테고리를 선택하세요.");
         System.out.println("1. " + ExpenseCategory.CLOTH.toString());
         System.out.println("2. " + ExpenseCategory.FOOD.toString());
@@ -93,7 +85,7 @@ public class InputReportMenu {
         }
 
         System.out.print("지출 내역: ");
-        String content = sc.nextLine();
+        content = sc.nextLine();
         System.out.print("금액: ");
         int price = Integer.parseInt(sc.nextLine());
         System.out.println("지불 수단을 선택하세요.");
@@ -117,21 +109,11 @@ public class InputReportMenu {
         } else{
             paymentMethod = PayCategory.GIFT_CARD.name();
         }
-        reportService.addReport(false, paymentMethod, category, price, content, LocalDate.of(year, month, day));
+        reportService.addReport(false, paymentMethod, category, price, content, LocalDate.of(inputDateMenu.year, inputDateMenu.month, inputDateMenu.day));
     }
 
     public void inputIncomeReport() {
-        try {
-            System.out.print("날짜: ");
-            String[] date = sc.nextLine().split("-");
-            year = Integer.parseInt(date[0]);
-            month = Integer.parseInt(date[1]);
-            day = Integer.parseInt(date[2]);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException e) {
-            System.out.println("형식에 맞게 다시 입력하세요.");
-            System.out.println(e.getMessage());
-            inputExpenseReport();
-        }
+        inputDateMenu.inputReportDate();
         System.out.println("카테고리를 선택하세요.");
         System.out.println("1. " + IncomeCategory.SALARY.name());
         System.out.println("2. " + IncomeCategory.POCKET_MONEY.name());
@@ -139,7 +121,6 @@ public class InputReportMenu {
         System.out.println("4. " + IncomeCategory.ETC.name());
         System.out.print(">> ");
         number = sc.nextLine();
-
         while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4")) {
             System.out.println("다시 입력하세요.");
             System.out.print(">> ");
@@ -148,19 +129,19 @@ public class InputReportMenu {
         }
 
         if (number.equals("1")) {
-            paymentMethod = IncomeCategory.SALARY.name();
+            category = IncomeCategory.SALARY.name();
         } else if (number.equals("2")) {
-            paymentMethod = IncomeCategory.POCKET_MONEY.name();
+            category = IncomeCategory.POCKET_MONEY.name();
         }else if (number.equals("3")) {
-            paymentMethod = IncomeCategory.FINANCIAL_MONEY.name();
+            category = IncomeCategory.FINANCIAL_MONEY.name();
         } else{
-            paymentMethod = IncomeCategory.ETC.name();
+            category = IncomeCategory.ETC.name();
         }
 
         System.out.print("수입 내역: ");
-        String content = sc.nextLine();
+        content = sc.nextLine();
         System.out.print("금액: ");
         int price = Integer.parseInt(sc.nextLine());
-        reportService.addReport(true, null, category, price, content, LocalDate.of(year, month, day));
+        reportService.addReport(true, null, category, price, content, LocalDate.of(inputDateMenu.year, inputDateMenu.month, inputDateMenu.day));
     }
 }

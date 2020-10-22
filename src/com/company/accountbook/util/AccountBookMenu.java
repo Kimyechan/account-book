@@ -43,7 +43,7 @@ public class AccountBookMenu {
 
         if (number.equals("1")) {
             System.out.println("가계부 리스트: " + accountBookService.getAccountBooks());
-            System.out.print("선택할 가계부 이름을 입력하세요: ");
+            System.out.print("조회할 가계부 이름을 입력하세요: ");
             accountBookName = sc.nextLine();
             while(!accountBookService.checkExisting(accountBookName)) {
                 System.out.print("다시 입력하세요: ");
