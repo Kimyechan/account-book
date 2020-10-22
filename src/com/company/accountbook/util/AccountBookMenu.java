@@ -10,6 +10,7 @@ public class AccountBookMenu {
     ReportService reportService = new ReportService();
     private String accountBookName;
     private String password;
+    private String deleteCheck;
 
     // 싱글톤
     private static AccountBookMenu instance;
@@ -32,11 +33,12 @@ public class AccountBookMenu {
         System.out.println("1. 가계부 조회");
         System.out.println("2. 가계부 생성");
         System.out.println("3. 가계부 수정");
+        System.out.println("4. 가계부 삭제");
         System.out.print(">> ");
         String number = sc.nextLine();
         System.out.println();
 
-        while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals("4")) {
             System.out.println("다시 입력하세요.");
             number = sc.nextLine();
             System.out.println();
@@ -59,7 +61,7 @@ public class AccountBookMenu {
                 System.out.print("다시 입력하세요: ");
                 password = sc.nextLine();
             }
-        } else if (number.equals("2")) {
+        } else if (number.equals("2")) { // 가계부 생성
             System.out.print("가계부 이름: ");
             String bookName = sc.nextLine();
             System.out.print("비밀번호: ");
@@ -68,7 +70,7 @@ public class AccountBookMenu {
             reportService.setBookNameForReportList(bookName);
             System.out.println();
             accountBookMenu();
-        } else {
+        } else if (number.equals("3")){
             System.out.println("가계부 리스트: " + accountBookService.getAccountBooks());
             System.out.print("수정할 가계부 이름을 입력하세요: ");
             accountBookName = sc.nextLine();
@@ -146,6 +148,31 @@ public class AccountBookMenu {
                 accountBookService.updateAccountBook(accountBookName, accountBookName, password);
                 System.out.println();
             }
+        } else {
+            deleteCheck ="";
+            System.out.println("가계부 리스트: " + accountBookService.getAccountBooks());
+            System.out.print("삭제할 가계부 이름을 입력하세요: ");
+            accountBookName = sc.nextLine();
+            while (!accountBookService.checkExisting(accountBookName)) {
+                System.out.print("다시 입력하세요: ");
+                accountBookName = sc.nextLine();
+            }
+            reportService.setBookNameForReportList(accountBookName);
+            System.out.println();
+            System.out.print("비밀번호를 입력하세요: ");
+            password = sc.nextLine();
+            System.out.println();
+            while (!accountBookService.checkAccessRight(accountBookName, password)) {
+                System.out.print("다시 입력하세요: ");
+                password = sc.nextLine();
+            }
+            System.out.println("정말로 삭제 하시겠습니까? 삭제를 원하시면 yes, 취소는 아무키나 입력하세요.");
+            deleteCheck = sc.nextLine();
+            System.out.println();
+            if(deleteCheck.equals("yes")) {
+                accountBookService.deleteAccountBook(accountBookName);
+            }
+            accountBookMenu();
         }
         MainMenu.getInstance().mainMenuPrint();
     }
