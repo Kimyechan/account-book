@@ -20,6 +20,10 @@ public class DBConnection {
             database = bufferedReader.readLine();
             user_name = bufferedReader.readLine();
             password = bufferedReader.readLine();
+<<<<<<< HEAD
+=======
+
+>>>>>>> yechan
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

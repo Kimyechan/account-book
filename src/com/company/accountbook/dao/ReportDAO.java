@@ -33,6 +33,7 @@ public class ReportDAO {
                 "value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         try {
+            con.setAutoCommit(false);
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setBoolean(1, isIncome);
             ps.setString(2, paymentMethod);
@@ -44,11 +45,16 @@ public class ReportDAO {
             ps.setInt(8, date.getMonthValue());
             ps.setInt(9, date.getYear());
             ps.executeUpdate();
-
+            con.commit();
             con.close();
             ps.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -214,5 +220,83 @@ public class ReportDAO {
             ex.printStackTrace();
         }
         return reports;
+    }
+
+    public void delete(Integer report_id) {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+
+        String sql = "delete from report where report_id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            con.setAutoCommit(false);
+            ps.setInt(1, report_id);
+
+            rs = ps.executeQuery();
+
+            con.commit();
+            con.close();
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void deleteBookCascade(String bookName) {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        String sql2 = "delete from report where account_book_name = ?";
+        try {
+            ps = con.prepareStatement(sql2);
+            con.setAutoCommit(false);
+            ps.setString(1, bookName);
+
+            ps.executeUpdate();
+
+            con.commit();
+            con.close();
+            ps.close();
+        } catch (SQLException ex1) {
+            ex1.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException ex2) {
+                ex2.printStackTrace();
+            }
+        }
+    }
+
+    public void updateBookCascade(String changedBookName, String bookName) {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps;
+        String sql2 = "update report set account_book_name = ? where account_book_name = ?";
+
+        try {
+            ps = con.prepareStatement(sql2);
+            con.setAutoCommit(false);
+            ps.setString(1, changedBookName);
+            ps.setString(2, bookName);
+
+            ps.executeUpdate();
+
+            con.commit();
+            con.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
