@@ -1,9 +1,13 @@
 package com.company.accountbook.util;
 
+import com.company.accountbook.service.ReportService;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class MainMenu {
     Scanner sc = new Scanner(System.in);
+    ReportService reportService = new ReportService();
 
     // 싱글톤
     private static MainMenu instance;
@@ -19,6 +23,7 @@ public class MainMenu {
     }
 
     public void mainMenuPrint() {
+        Calendar.getInstance().printCalendar(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), reportService.getMonthReports(LocalDate.now().getYear(), LocalDate.now().getMonthValue()));
         System.out.println("1. 조회");
         System.out.println("2. 가계부 입력");
         System.out.println("3. 통계");

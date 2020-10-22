@@ -68,11 +68,18 @@ public class StatisticsMenu {
                 break;
 
             case "3":  // 월별 통계
+                // 날짜 입력
                 inputDateMenu.inputYearMonth();
+                System.out.println();
+
+                // 달력
+                Calendar.getInstance().printCalendar(inputDateMenu.year, inputDateMenu.month, reportService.getMonthReports(inputDateMenu.year, inputDateMenu.month));
+
                 // 지출 리스트 가져옴
                 expense = reportService.getMonthExpenseStatics(inputDateMenu.year, inputDateMenu.month);
                 // 수입 리스트 가져옴
                 income = reportService.getMonthIncomeStatics(inputDateMenu.year, inputDateMenu.month);
+
 
                 // 지출 출력
                 printStatistics(false, expense);
@@ -107,10 +114,10 @@ public class StatisticsMenu {
     }
 
 
-    public void printStatistics(boolean isIncome,Map<String, Integer> reportList) {
+    public void printStatistics(boolean isIncome, Map<String, Integer> reportList) {
         totalMoney = 0;
 
-        if(isIncome) {
+        if (isIncome) {
             System.out.println("지출");
         } else {
             System.out.println("수입");

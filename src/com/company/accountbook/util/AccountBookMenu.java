@@ -29,7 +29,6 @@ public class AccountBookMenu {
     public void accountBookMenu() {
         Scanner sc = new Scanner(System.in);
 
-        // 초기 화면 출력 (이번달 달력)
         System.out.println("1. 가계부 조회");
         System.out.println("2. 가계부 생성");
         System.out.println("3. 가계부 수정");
