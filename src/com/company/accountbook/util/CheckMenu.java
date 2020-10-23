@@ -71,23 +71,11 @@ public class CheckMenu {
             System.out.println("형식에 맞게 입력하세요.");
             dayCheckReport();
         }
+        System.out.println();
         if (reportService.getDayReports(year, month, day).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            List<Report> reportList = reportService.getDayReports(year, month, day);
-            List<Report> expense = new ArrayList<>();
-            List<Report> income = new ArrayList<>();
-            for (Report report : reportList) {
-                if (report.isIncome()) {
-                    income.add(report);
-                } else {
-                    expense.add(report);
-                }
-            }
-            System.out.println("지출 내역");
-            expense.forEach(System.out::println);
-            System.out.println("수입 내역");
-            income.forEach(System.out::println);
+            printReport(reportService.getDayReports(year, month, day));
         }
     }
 
@@ -105,13 +93,11 @@ public class CheckMenu {
             System.out.println("형식에 맞게 입력하세요.");
             monthCheckReport();
         }
+        System.out.println();
         if (reportService.getMonthReports(year, month).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            System.out.println("지출 내역");
-            reportService.getMonthReports(year, month).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
-            System.out.println("수입 내역");
-            reportService.getMonthReports(year, month).stream().filter(report -> report.isIncome()).forEach(System.out::println);
+            printReport(reportService.getMonthReports(year, month));
         }
     }
 
@@ -124,13 +110,36 @@ public class CheckMenu {
             System.out.println("형식에 맞게 입력하세요.");
             yearCheckReport();
         }
+        System.out.println();
         if (reportService.getYearReports(year).isEmpty()) {
             System.out.println("내역 없음");
         } else {
-            System.out.println("지출 내역");
-            reportService.getYearReports(year).stream().filter(report -> !report.isIncome()).forEach(System.out::println);
-            System.out.println("수입 내역");
-            reportService.getYearReports(year).stream().filter(report -> report.isIncome()).forEach(System.out::println);
+            printReport(reportService.getYearReports(year));
+        }
+    }
+
+    public void printReport(List<Report> reportList) {
+        List<Report> expense = new ArrayList<>();
+        List<Report> income = new ArrayList<>();
+        for (Report report : reportList) {
+            if (report.isIncome()) {
+                income.add(report);
+            } else {
+                expense.add(report);
+            }
+        }
+        System.out.println("***** 지출 내역 *****\n");
+        if (expense.isEmpty()) {
+            System.out.println("내역 없음");
+        } else {
+            expense.forEach(System.out::println);
+        }
+        System.out.println("\n");
+        System.out.println("***** 수입 내역 *****\n");
+        if (income.isEmpty()) {
+            System.out.println("내역 없음");
+        } else {
+            income.forEach(System.out::println);
         }
     }
 }

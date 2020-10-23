@@ -2,6 +2,7 @@ package com.company.accountbook.util;
 
 import com.company.accountbook.service.ReportService;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -48,6 +49,7 @@ public class StatisticsMenu {
             case "1":  // 일별 통계
                 // 날짜 입력
                 inputDateMenu.inputYearMonthDay();
+                System.out.println();
 
                 // 지출 리스트 가져옴
                 expense = reportService.getDayExpenseStatics(inputDateMenu.year, inputDateMenu.month, inputDateMenu.day);
@@ -91,6 +93,7 @@ public class StatisticsMenu {
 
             case "4":  // 연도별 통계
                 inputDateMenu.inputYear();
+                System.out.println();
                 // 지출 리스트 가져옴
                 expense = reportService.getYearExpenseStatics(inputDateMenu.year);
                 // 수입 리스트 가져옴
@@ -115,12 +118,13 @@ public class StatisticsMenu {
 
 
     public void printStatistics(boolean isIncome, Map<String, Integer> reportList) {
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
         totalMoney = 0;
 
         if (isIncome) {
-            System.out.println("지출");
+            System.out.println("- 지출 통계");
         } else {
-            System.out.println("수입");
+            System.out.println("- 수입 통계");
         }
         if (reportList.isEmpty()) {
             System.out.println("- 내역 없음");
@@ -129,10 +133,10 @@ public class StatisticsMenu {
                 totalMoney += entry.getValue();
             }
             for (Map.Entry<String, Integer> entry : reportList.entrySet()) {
-                System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " (" + ((float) entry.getValue() * 100 / (float) totalMoney) + " %)");
+                System.out.println("- " + entry.getKey() + ": " + decimalFormat.format(entry.getValue()) + " (" + ((float) entry.getValue() * 100 / (float) totalMoney) + " %)");
             }
             System.out.println();
-            System.out.println("총 금액: " + totalMoney);
+            System.out.println("총 금액: " + decimalFormat.format(totalMoney));
         }
     }
 }
