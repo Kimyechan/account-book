@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class DeleteReportMenu {
     ReportService reportService = new ReportService();
-    InputDateMenu inputDateMenu = InputDateMenu.getInstance();
     Scanner sc = new Scanner(System.in);
     protected int year;
     protected int month;
