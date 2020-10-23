@@ -134,21 +134,21 @@ public class Report {
     @Override
     public String toString() {
         if (isIncome) {
-            return "------------------" + "\n" +
+            return "---- 수입  내역서 ----" + "\n" +
                     year + "년 " + month + "월 " + day + "일" + "\n" +
                     "카테고리: " + category + "\n" +
                     "수입 내역: " + content + "\n" +
                     "금액: " + price + "\n" +
-                    "------------------" + "\n"
+                    "------------------"
                     ;
         } else {
-            return "------------------" + "\n" +
+            return "---- 지출 내역서 ----" + "\n" +
                     year + "년 " + month + "월 " + day + "일" + "\n" +
                     "카테고리: " + category + "\n" +
                     "지출 내역: " + content + "\n" +
                     "금액: " + price + "\n" +
                     "지불 수단: " + paymentMethod + "\n" +
-                    "------------------" + "\n"
+                    "------------------"
                     ;
         }
     }
